@@ -1,4 +1,4 @@
-import { Inject, Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { jwtDecode } from "jwt-decode";
 
 import { AuthTokenType } from "../api/auth-token-type";
@@ -13,8 +13,9 @@ export class TokenStoreService {
 
     private rememberMeToken = "rememberMe_token";
 
+    apiConfig = inject<IApiConfig>(API_CONFIG);
+
     constructor(
-        @Inject(API_CONFIG) private apiConfig: IApiConfig,
         private browserStorageService: BrowserStorageService,
         private utilsService: UtilsService) { }
 

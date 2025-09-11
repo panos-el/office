@@ -37,12 +37,31 @@ export default [
                     prefix: 'lib',
                     style: 'kebab-case'
                 }
-            ]
+            ],
+            "@angular-eslint/directive-selector": 'off',
+            "@angular-eslint/prefer-inject": 'off',
+            "@angular-eslint/use-lifecycle-interface": "off",
+            "@angular-eslint/component-selector": "off",
+            "@typescript-eslint/no-unused-vars": "off",
+            "@typescript-eslint/no-empty-function": "off",
+            "@typescript-eslint/no-unused-expressions": "off",
+            "@typescript-eslint/no-explicit-any": "off",
+            "@typescript-eslint/no-inferrable-types": "off",
         }
     },
     {
         files: ['**/*.html'],
         // Override or add rules here
-        rules: {}
-    }
+        rules: {
+            "@angular-eslint/template/elements-content": "off",
+            "@angular-eslint/template/alt-text": "off",
+            "@angular-eslint/template/interactive-supports-focus": "off",
+            "@angular-eslint/template/click-events-have-key-events": "off",
+        }
+    },
+    {
+        rules: {
+            "@nx/dependency-checks": "off",
+        }
+    },
 ];

@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
-import { Inject, Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { Subscription, throwError, timer } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 
@@ -18,10 +18,11 @@ export class RefreshTokenService {
     private refreshTokenTimerCheckId = "is_refreshToken_timer_started";
     private refreshTokenSubscription: Subscription | null = null;
 
+    baseUrl = inject(BASE_URL);
+    apiConfig = inject<IApiConfig>(API_CONFIG);
+
     constructor(
         private tokenStoreService: TokenStoreService,
-        @Inject(BASE_URL) private baseUrl: string,
-        @Inject(API_CONFIG) private apiConfig: IApiConfig,
         private http: HttpClient,
         private browserStorageService: BrowserStorageService,
         private utilsService: UtilsService) { }

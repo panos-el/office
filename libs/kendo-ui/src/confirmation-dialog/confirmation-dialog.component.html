@@ -1,0 +1,15 @@
+ <kendo-dialog-titlebar (close)="headerButtonClick()">
+     <div #header style="font-size: 18px; line-height: 1.3em;">
+         <span>{{options.title}}</span>
+     </div>
+ </kendo-dialog-titlebar>
+
+ <p>{{options.message}}</p>
+
+ <kendo-dialog-actions layout="end">
+    @for (action of actions; track action.id) {  
+        <button kendoButton [themeColor]="action.themeColor!" (click)="onClose(action)">
+            {{action.text}}
+        </button>
+    }
+ </kendo-dialog-actions>

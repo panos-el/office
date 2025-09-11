@@ -1,0 +1,201 @@
+<div kendoRemoteGridDirective>
+    @if (gridData) {
+        <div [@animationState]="animate ? 'active' : 'inactive'">
+            <h5 *ngIf="pageTitleEnable">{{gridConfig.title}}</h5>
+            <div *ngIf="filterPanelVisible" [@menu]="'inline'">
+                <kendo-filter #filter [filters]="filterExpressions" [value]="filterPanelValue"></kendo-filter>
+                <div class="k-dialog-actions k-actions-srart" style="border-color: #e0e0e0">
+                    <button kendoButton (click)="applyFilter(filter.value)" themeColor="primary">{{applyFilterLabel}}</button>
+                </div>
+            </div>
+
+            <kendo-grid [kendoStickyHeader]="56"
+                #grid2 
+                [data]="gridData"        
+                [height]="gridHeight"
+                [resizable]="resizable"
+                [reorderable]="reorderable"
+                [columnMenu]="columnMenu"
+                [trackBy]="trackByItem"
+                [kendoGridSelectBy]="dataKey"
+                [(selectedKeys)]="selectedKeys"
+                [selectable]="gridConfig.selectable"
+                [pageable]="gridConfig.pagable"
+                [loading]="loading"
+                [pageSize]="state.take"
+                [skip]="state.skip"
+                [sortable]="gridConfig.sortable"
+                [sort]="state.sort"
+                [groupable]="gridConfig.groupable"
+                [group]="state.group"
+                [filterable]="gridConfig.filterable"
+                [filter]="state.filter"
+                [columnMenu]="columnMenuSettings"
+                (cellClick)="onCellClick($event)"
+                (dblclick)="onDblClick($event)"
+                (columnReorder)="onColumnReorder($event)"
+                (columnResize)="onColumnResize($event)"
+                (columnVisibilityChange)="onColumnVisibilityChange($event)"
+                (dataStateChange)="onDataStateChange($event)">
+                
+                <ng-template kendoGridToolbarTemplate>
+                    <ng-container *ngIf="quickSearchEnable">
+                        <search-box (valueChange)="onQuickSearchValueChange($event)"></search-box>
+                    </ng-container>
+                    <div *ngIf="selectedKeys.length > 0">({{ selectedKeys.length }}/{{ gridData.total }})</div>
+                    <kendo-grid-spacer></kendo-grid-spacer>
+                    <button *ngIf="filterCommandEnable" kendoButton [svgIcon]="filterIcon" (click)="toggleFilterPanel()">
+                        @if (filterExist) {
+                            <kendo-badge rounded="medium" themeColor="warning"></kendo-badge>
+                        }
+                    </button>
+                    <button *ngIf="excelCommandEnable" kendoGridExcelCommand [svgIcon]="fileExcelIcon"></button>
+                    <button *ngIf="pdfCommandEnable" kendoGridPDFCommand [svgIcon]="filePdfIcon"></button>
+                    <kendo-grid-column-chooser *ngIf="columnChooserCommandEnable"></kendo-grid-column-chooser>
+                    <button kendoButton (click)="grid2.autoFitColumns()" [svgIcon]="displayInlineFlexIcon" [title]="autofitColumnsLabel"></button>
+
+                    <span class="k-separator" style="color: #fafafa"></span>
+                    <kendo-dropdownbutton *ngIf="settingsMenuEnable"
+                                        [data]="settingsMenuData"
+                                        [popupSettings]="{ align: 'right', popupClass: 'dropdown-grid-popup' }"
+                                        [title]="settingsMenuLabel"
+                                        [svgIcon]="gearIcon">
+                    </kendo-dropdownbutton>
+                    
+                    <kendo-grid-spacer *ngIf="rightSeparatorEnable"></kendo-grid-spacer>
+                    <button *ngIf="insertCommandEnable" kendoButton style="margin: 0 3px;" iconClass="k-icon k-font-icon k-i-plus !k-color-primary" (click)="insertCommand()">{{insertLabel}}</button>
+                    <button *ngIf="deleteCommandEnable" kendoButton style="margin: 0 3px;" iconClass="k-icon k-font-icon k-i-trash !k-color-error" [disabled]="selectedKeys.length === 0" (click)="deleteCommand()">{{deleteLabel}}</button>
+
+                </ng-template>
+
+                @if (checkboxColumnEnable) {
+                <kendo-grid-checkbox-column [width]="45"
+                                            [headerClass]="{ 'text-center': true }"
+                                            [class]="{ 'text-center': true, 'k-grid-checkbox-column': true }"
+                                            [resizable]="false"
+                                            [columnMenu]="false"
+                                            [showSelectAll]="showSelectAllEnable">
+                </kendo-grid-checkbox-column>
+                }
+
+                @for (col of columns; track col.field) {
+                <kendo-grid-column 
+                    [field]="col.field" 
+                    [title]="col.title" 
+                    [width]="col.width" 
+                    [filter]="col.filter"
+                    [sortable]="col.sortable" 
+                    [groupable]="col.groupable" 
+                    [filterable]="col.filterable"
+                    [hidden]="col.hidden" 
+                    [locked]="col.locked" 
+                    [sticky]="col.sticky" 
+                    [format]="col.format" 
+                    [style]="col.style" 
+                    [class]="col.class">
+                    
+                    <ng-template kendoGridGroupHeaderTemplate let-value="value">
+                        <span>{{ groupHeaderTemplate(value) }}</span>
+                    </ng-template>
+
+                    <ng-container *ngIf="aggregatable">
+
+                        <ng-template kendoGridGroupFooterTemplate let-aggregates="aggregates">
+                            <ng-container *ngTemplateOutlet="aggregateTemplates[col.field]; context: { aggregates: aggregates }">
+                            </ng-container>
+                        </ng-template>
+                    </ng-container>
+
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <ng-container [ngSwitch]="col.columnType">
+
+                            <!-- Link case -->
+                            <ng-container *ngSwitchCase="'link'">
+                                <span class="routerLink-column">
+                                    <a [routerLink]="['/' + formOptions.pathUrl, dataItem[dataKey]]" [attr.target]="col.target">
+                                        {{dataItem[col.field]}}
+                                    </a>
+                                </span>
+                            </ng-container>
+
+                            <!-- Numeric case -->
+                            <ng-container *ngSwitchCase="'numeric'">
+                                <span>{{ dataItem[col.field] | kendoNumber: '#,##0' }}</span>
+                            </ng-container>
+
+                            <!-- Button case -->
+                            <ng-container *ngSwitchCase="'button'">
+                                <ng-container *ngTemplateOutlet="buttonTemplates[col.field]; context: { dataItem: dataItem }">
+                                </ng-container>
+                            </ng-container>
+
+                            <!-- Decimal case -->
+                            <ng-container *ngSwitchCase="'decimal'">
+                                <span>{{ dataItem[col.field] | kendoNumber: '#,##0.00' }}</span>
+                            </ng-container>
+
+                            <!-- Date case -->
+                            <ng-container *ngSwitchCase="'date'">
+                                <span>{{ dataItem[col.field] | kendoDate: 'd' }}</span>
+                            </ng-container>
+
+                            <!-- DateTime case -->
+                            <ng-container *ngSwitchCase="'date-time'">
+                                <span>{{ dataItem[col.field] | kendoDate: 'g' }}</span>
+                            </ng-container>
+
+                            <!-- Time case -->
+                            <ng-container *ngSwitchCase="'time'">
+                                <span>{{ dataItem[col.field] | kendoDate: 'HH:mm' }}</span>
+                            </ng-container>
+
+                            <!-- checkbox case -->
+                            <ng-container *ngSwitchCase="'checkbox'">
+                                <kendo-svg-icon *ngIf="dataItem[col.field]" [icon]="checkOutlineIcon" themeColor="success" size="large"></kendo-svg-icon>
+                                <kendo-svg-icon *ngIf="!dataItem[col.field]" [icon]="minusOutlineIcon" themeColor="error" size="large"></kendo-svg-icon>
+                            </ng-container>
+
+                            <!-- Switch case -->
+                            <ng-container *ngSwitchCase="'switch'">
+                                <span>
+                                    <kendo-switch [readonly]="true" [checked]="dataItem[col.field]"
+                                                [size]="'small'" [onLabel]="''" [offLabel]="''">
+                                    </kendo-switch>
+                                </span>
+                            </ng-container>
+
+                            <!-- Default case -->
+                            <ng-container *ngSwitchDefault>
+                                <span>{{ dataItem[col.field] }}</span>
+                            </ng-container>
+                        </ng-container>
+                    </ng-template>
+                </kendo-grid-column>
+                }
+            <kendo-grid-pdf
+                fileName="pdfExport.pdf"
+                [allPages]="true"
+                paperSize="A4"
+                margin="1cm"
+                [scale]="0.6"
+                [repeatHeaders]="true"
+                [landscape]="landscape">
+                <ng-template 
+                    kendoGridPDFTemplate
+                    let-pageNum="pageNum"
+                    let-totalPages="totalPages">
+                    <div class="page-template">
+                        <div class="footer">{{ pageNum }} / {{ totalPages }}</div>
+                    </div>
+                </ng-template>
+            </kendo-grid-pdf>
+
+            <kendo-grid-excel
+                fileName="excelExport.xlsx"
+                [fetchData]="excelExportAll">
+            </kendo-grid-excel>
+
+            </kendo-grid>
+        </div>    
+    }
+</div>

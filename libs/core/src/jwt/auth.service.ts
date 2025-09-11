@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
-import { Inject, Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject, Observable, throwError } from "rxjs";
 import { catchError, finalize, map } from "rxjs/operators";
@@ -20,11 +20,12 @@ export class AuthService {
     private authStatusSource = new BehaviorSubject<boolean>(false);
     authStatus$ = this.authStatusSource.asObservable();
 
+    baseUrl = inject(BASE_URL);
+    apiConfig = inject<IApiConfig>(API_CONFIG);
+
     constructor(
         private http: HttpClient,
         private router: Router,
-        @Inject(BASE_URL) private baseUrl: string,
-        @Inject(API_CONFIG) private apiConfig: IApiConfig,
         private tokenStoreService: TokenStoreService,
         private refreshTokenService: RefreshTokenService
     ) {

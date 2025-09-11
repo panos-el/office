@@ -1,0 +1,10 @@
+<div #wrapper kendoGridToolbarFocusable (keydown.enter)="textbox.focus()">
+    <kendo-textbox #textbox
+                    name="quickSearch"
+                    [placeholder]="searchLabel"
+                    [style.width.em]="20"
+                    (click)="onQuickSearchClick($event)"
+                    (keydown)="onQuickSearchKeydown($event, wrapper)"
+                    (afterValueChanged)="onValueChange($event)">
+    </kendo-textbox>
+</div>

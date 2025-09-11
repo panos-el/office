@@ -1,0 +1,32 @@
+<div kendoEditFormDirective>
+    @if (fields) {
+
+        <div [@animationState]="animate ? 'active' : 'inactive'">
+
+            <h5>{{pageTitle}}</h5>
+            <kendo-toolbar>
+
+                <kendo-toolbar-dropdownbutton *ngIf="settingsEnable"
+                                            [popupSettings]="{ popupAlign: { horizontal: 'right', vertical: 'top' }}"
+                                            [data]="settingsData"
+                                            [title]="settingsLabel"
+                                            iconClass="k-icon k-font-icon k-i-cog">
+                </kendo-toolbar-dropdownbutton>
+
+                <kendo-toolbar-spacer></kendo-toolbar-spacer>
+
+                <kendo-toolbar-button [disabled]="!isDirty" [text]="saveLabel" themeColor="primary" (click)="saveChanges()"></kendo-toolbar-button>
+                <kendo-toolbar-button [disabled]="!isDirty" [text]="saveAndExitLabel" (click)="saveChanges(true)"></kendo-toolbar-button>
+                <kendo-toolbar-button [disabled]="!isDirty" [text]="cancelLabel" (click)="cancelChanges()"></kendo-toolbar-button>
+                <kendo-toolbar-separator></kendo-toolbar-separator>
+                <kendo-toolbar-button [text]="backLabel" themeColor="warning" (click)="goBack()"></kendo-toolbar-button>
+
+            </kendo-toolbar>
+
+            <form [formGroup]="form" class="mt-3">
+                <formly-form [form]="form" [model]="model" [fields]="fields" [options]="options"></formly-form>
+            </form>
+
+        </div>
+    }
+</div>
