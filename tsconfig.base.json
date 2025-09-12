@@ -10,10 +10,10 @@
         "paths": {
             "@office/client": ["libs/client/src/index.ts"],
             "@office/core": ["libs/core/src/index.ts"],
-            "@office/formly-kendo-ui": ["libs/formly-kendo-ui/src/index.ts"],
             "@office/formly-primeng-ui": ["libs/formly-primeng-ui/src/index.ts"],
+            "@office/kendo-ui": ["libs/kendo-ui/src/index.ts"],
             "@office/shell": ["libs/shell/src/index.ts"],
-            "@office/kendo-ui": ["libs/kendo-ui/src/index.ts"]
+            "@office/formly-kendo-ui": ["libs/formly-kendo-ui/src/index.ts"]
         }
     },
     "exclude": ["node_modules", "tmp"]

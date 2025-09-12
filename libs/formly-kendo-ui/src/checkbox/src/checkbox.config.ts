@@ -5,9 +5,9 @@ export function withFormlyFieldCheckbox(): ConfigOption {
   return {
     types: [
       {
-        name: 'checkbox',
+        name: 'kendo-checkbox',
         component: FormlyFieldCheckbox,
-        wrappers: ['form-field'],
+        wrappers: ['form-field-horizontal'],
       },
       {
         name: 'boolean',

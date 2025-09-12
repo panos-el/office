@@ -6,9 +6,16 @@ import { FormlyWrapperFormField } from './form-field.wrapper';
 import { FormFieldModule } from '@progress/kendo-angular-inputs';
 import { LabelModule } from '@progress/kendo-angular-label';
 import { withFormlyFormField } from './form-field.config';
+import { FormlyWrapperHorizontalField } from './horizontal-field.wrapper';
+import { FormlyWrapperVerticalField } from './vertical-field.wrapper';
 
 @NgModule({
-  declarations: [FormlyWrapperFormField],
+  declarations: [
+    FormlyWrapperFormField, 
+    FormlyWrapperHorizontalField, 
+    FormlyWrapperFormField, 
+    FormlyWrapperVerticalField
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

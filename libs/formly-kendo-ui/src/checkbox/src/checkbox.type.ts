@@ -1,11 +1,11 @@
 import { Component, ChangeDetectionStrategy, ViewEncapsulation, Type } from '@angular/core';
 import { FieldTypeConfig, FormlyFieldConfig } from '@ngx-formly/core';
-import { FieldType, FormlyFieldProps } from '../../form-field';
+import { FieldType, BaseFormlyFieldProps } from '../../form-field';
 
-interface CheckboxProps extends FormlyFieldProps {}
+interface CheckboxProps extends BaseFormlyFieldProps {}
 
 export interface FormlyCheckboxFieldConfig extends FormlyFieldConfig<CheckboxProps> {
-  type: 'checkbox' | Type<FormlyFieldCheckbox>;
+  type: 'kendo-checkbox'
 }
 
 @Component({
