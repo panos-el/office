@@ -4,3 +4,218 @@
 @use 'primeicons/primeicons.css';
 @use './demo/demo.scss';
 
+/* regular style toast */
+@use 'ngx-toastr/toastr';
+
+:root {
+    --kendo-font-size: 15px;
+}
+.demo {
+    display: block;
+}
+.k-form-field .k-label {    
+    font-size: var(--kendo-font-size);
+    font-weight: var(--kendo-font-weight-medium);
+}
+
+/* fix layout sidebar */
+@media screen and (min-width: 992px) {
+    .layout-container.layout-static .layout-content-wrapper {
+        margin-left: 20rem;
+    }
+}
+@media screen and (min-width: 992px) {
+    .layout-container.layout-static-inactive .layout-content-wrapper {
+        margin-left: 0;
+    }
+}
+.layout-sidebar {
+    width: 20rem;
+}
+.layout-topbar .layout-topbar-start {
+    width: 20rem;
+}
+
+/* fix avalon scrollbar width */
+.layout-menu-container::-webkit-scrollbar {
+    width: 4px;
+}
+.layout-menu-container::-webkit-scrollbar-track {
+    background: #ced4da;
+}
+.layout-menu-container::-webkit-scrollbar-thumb {
+    background-color: #9e9e9e;
+    border-radius: 20px;
+}
+.layout-menu-container.layout-menu-dark::-webkit-scrollbar-track {
+    background: #9e9e9e;
+}
+.layout-menu-container.layout-menu-dark::-webkit-scrollbar-thumb {
+    background-color: #ced4da;
+    border-radius: 20px;
+}
+.layout-sidebar .layout-menu ul a {
+    padding-right: .5rem;
+}
+
+/* fix toastr width */
+.toast-container .ngx-toastr {
+    width: 400px;
+}
+.toast-container .ngx-toastr.ngx-toastr-width {
+    width: 600px;
+}
+
+/* fix layout-footer padding */
+.layout-footer {
+    padding: 0.5rem;
+}
+
+/*fix top right bar gap*/
+.layout-topbar .layout-topbar-end .layout-topbar-actions-end .layout-topbar-items {
+    gap: 3rem;
+}
+/*fix toastr width*/
+.toast-container .ngx-toastr {
+    width: 400px;
+}
+.toast-container .ngx-toastr.ngx-toastr-width {
+    width: 600px;
+}
+/*fic primeNg*/
+.layout-topbar {
+    border-bottom: none !important;
+}
+/*fix primeNg layout-content padding*/
+.layout-content-wrapper .layout-content {
+    padding: 1rem;
+}
+/*fix preloader background color*/
+.layout-preloader-container {
+    background-color: var(--surface-50);
+}
+/*fix layout-sidebar*/
+.layout-sidebar {
+    font-size: var(--kendo-font-size, inherit);
+    line-height: var(--kendo-line-height, normal);
+}
+/*fix style the header of the filtered column:css*/
+.k-header:has(.k-active) {
+    background-color: #FFF0F5;
+
+    .k-column-title {
+        color: #191970;
+    }
+}
+/*fix kendo-grid dropdown button popup*/
+.dropdown-grid-popup .k-menu-group .k-item.k-focus > .k-link {
+    box-shadow: none;
+}
+.dropdown-grid-popup .k-link.k-menu-link.k-disabled.k-group-menu {
+    font-weight: 500;
+    border-bottom: 1px solid #bdbdbd;
+    opacity: 1;
+}
+/*fix kendo-grid-column link*/
+.k-grid .routerLink-column a {
+    color: blue;
+}
+//sticky
+.k-grid-header, .k-grid-footer {
+    padding: 0 !important;
+}
+.k-grid-content.k-virtual-content {
+    overflow-y: hidden;
+}
+@media screen and (min-width: 992px) {
+    .k-fixed-header {
+        position: fixed;
+        z-index: 1000; /* make sure it's above content */
+    }
+
+    .layout-static .k-fixed-header {
+        left: 21rem !important;
+        width: calc(100% - 22rem) !important;
+        /* padding: 0 15px 0 0 !important; */
+    }
+
+    .layout-static.layout-static-inactive .k-fixed-header {
+        left: 1rem !important;
+        width: calc(100% - 2rem) !important;
+        /* padding: 0 15px !important; */
+    }    
+    .k-fixed-header {
+        transition: width 0.3s cubic-bezier(0, 0, 0.2, 1),left 0.3s cubic-bezier(0, 0, 0.2, 1);
+    }
+}
+/*fix kendo-grid-column-chooser*/
+kendo-grid-column-chooser > button.k-button {
+    border-color: var(--kendo-color-border, rgba(0, 0, 0, 0.08)) !important;
+    color: var(--kendo-color-on-base, #424242) !important;
+    background-color: var(--kendo-color-base, #f5f5f5) !important;
+}
+.k-grid-footer td, .k-grid-footer .k-table-td, .k-grid-header .k-table-th, .k-group-footer td, .k-grouping-row td, .k-group-footer .k-table-td, .k-grouping-row .k-table-td {
+    font-weight: var(--kendo-grid-header-font-weight, var(--kendo-font-weight-medium, normal));
+    font-weight: 500;
+}
+.k-grid .k-column-title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.k-grid .k-group-footer td {
+    text-align: right;
+}
+/*fix kendo-filter*/
+kendo-filter .k-filter-container {
+    margin: 0;
+    margin-block-end: 0;
+}
+kendo-filter .k-toolbar .k-picker {
+    width: 20rem;
+}
+kendo-filter .k-button-action {
+    width: 8rem;
+}
+/*fix kendo form*/
+.field.grid > label {
+    font-weight: 500;
+}
+span[aria-hidden="true"].k-required {
+    display: contents;
+    color: red;
+}
+formly-field:nth-last-of-type(1) > * > .field.grid {
+    margin-bottom: 0px;
+}
+.field.grid > label > span:first-child {
+    padding-right: 2px;
+}
+.k-label span.k-required {
+    display: contents;
+    color: red;
+}
+.k-form-horizontal .k-form-field > .k-label, .k-form-horizontal .k-form-field > kendo-label, .k-form-horizontal .k-form-field > .k-form-label {
+    text-align: start !important;
+    align-items: flex-start !important;
+}
+/*fix kendo dialog*/
+.custom-list-dialog .k-window-content.k-dialog-content {
+    padding: 0 !important;
+}
+.k-window-title.k-dialog-title {
+    font-size: 16px;
+    font-weight: 500;
+}
+.k-dialog-wrapper .k-dialog {
+    margin: 0 1rem;
+}
+.k-dialog-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.k-dialog-wrapper .k-dialog .k-dialog-content {
+  flex-grow: 1;
+  overflow: auto;
+}

@@ -4,7 +4,9 @@
         "outDir": "../../dist/out-tsc",
         "declaration": true,
         "declarationMap": true,
-        "inlineSources": true,
+        /* "inlineSources": true, */ 
+        // "traceResolution": true,
+        // "paths": {},
         "types": []
     },
     "exclude": ["src/**/*.spec.ts", "jest.config.ts", "src/**/*.test.ts"],
