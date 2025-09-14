@@ -1,11 +1,11 @@
 import { AppConfigurator } from '@office/client';
 import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-landing',
-    standalone: true,
-    imports: [ButtonModule, AppConfigurator],
+    imports: [RouterLink, ButtonModule, AppConfigurator],
     template: `
         <div>
             <div class="bg-cover bg-no-repeat bg-bottom py-12 px-4 md:px-12 relative" style="background-image: url(/demo/images/landing/landing-main.jpg)">
@@ -32,7 +32,7 @@ import { ButtonModule } from 'primeng/button';
                             </ul>
                         </div>
                         <div class="flex justify-center lg:justify-end items-center gap-4">
-                            <button pButton pRipple label="Login" class="w-32 text-white! hover:text-gray-700! duration-200 hover:bg-white" outlined></button>
+                            <button [routerLink]="['/login']" pButton pRipple label="Login" class="w-32 text-white! hover:text-gray-700! duration-200 hover:bg-white" outlined></button>
                             <button pButton pRipple label="Register" class="w-32 text-white! hover:text-gray-700! duration-200 hover:bg-white" outlined></button>
                         </div>
                     </div>

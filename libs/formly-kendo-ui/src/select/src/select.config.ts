@@ -7,7 +7,7 @@ export function withFormlyFieldSelect(): ConfigOption {
       {
         name: 'kendo-select',
         component: FormlyFieldSelect,
-        wrappers: ['kendo-form-field-horizontal'],
+        wrappers: ['wrapper-kendo-formfield'],
         defaultOptions: {
             props: {
                 labelProp: 'label',
@@ -15,7 +15,6 @@ export function withFormlyFieldSelect(): ConfigOption {
             },
         },
       },
-      { name: 'enum', extends: 'select' },
     ],
   };
 }

@@ -1,6 +1,6 @@
 import { Directive, ViewChildren, QueryList } from '@angular/core';
-import { FormlyFieldConfig, FieldType as CoreFieldType } from '@ngx-formly/core';
 import { NgControl } from '@angular/forms';
+import { FormlyFieldConfig, FieldType as CoreFieldType } from '@ngx-formly/core';
 import { FormFieldComponent } from '@progress/kendo-angular-inputs';
 
 @Directive()

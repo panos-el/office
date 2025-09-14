@@ -1,47 +1,52 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { FormFieldComponent, Orientation } from '@progress/kendo-angular-inputs';
-import {
-  ɵdefineHiddenProp as defineHiddenProp,
-  FieldWrapper, FormlyFieldConfig, FormlyFieldProps } from '@ngx-formly/core';
-
-export interface BaseFormlyFieldProps extends FormlyFieldProps {
-  hideRequiredMarker?: boolean;
-  hideLabel?: boolean;
-  orientation?: Orientation;
-  markAsRequired?: boolean;
-}
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormFieldComponent, KENDO_FORMFIELD, ResponsiveFormBreakPoint } from '@progress/kendo-angular-inputs';
+import { ɵdefineHiddenProp as defineHiddenProp, FieldWrapper, FormlyFieldConfig } from '@ngx-formly/core';
+import { BaseFormlyFieldProps } from './base-formly-field-props';
 
 @Component({
-  standalone: false,
-  selector: 'formly-wrapper-kendo-form-field',
-  template: `
-    <kendo-formfield [orientation]="props.orientation || 'horizontal'">
-      <label *ngIf="props.label && props.hideLabel !== true" [for]="id">
-        {{ props.label }}
-        <span *ngIf="props.required && props.hideRequiredMarker !== true" aria-hidden="true" class="k-required">*</span>
-      </label>
+    imports: [CommonModule, ReactiveFormsModule, KENDO_FORMFIELD ],
+    selector: 'formly-wrapper-kendo-formfield',
+    template: `
+        <kendo-formfield [colSpan]="props.colSpan || 2" [ngClass]="{ 'k-ff-vertical': props.orientation === 'vertical' }">
+            @if (props.label && props.hideLabel !== true) {
+                <label [for]="id" class="k-form-label">
+                    {{ props.label }}
+                    @if (props.required && props.hideRequiredMarker !== true) {
+                        <span aria-hidden="true" class="k-required">*</span>
+                    }
+                    @if (props.markAsRequired === true) {
+                        <span aria-hidden="true" class="k-required">*</span>
+                    }
+                </label>
+            }
 
-      <ng-container #fieldComponent></ng-container>
-
-    </kendo-formfield>
-  `,
+            <ng-container #fieldComponent></ng-container>
+        </kendo-formfield>
+    `
 })
 export class FormlyWrapperFormField extends FieldWrapper<FormlyFieldConfig<BaseFormlyFieldProps>> implements OnInit {
-  @ViewChild(FormFieldComponent, { static: true }) formfield!: FormFieldComponent;
+    @ViewChild(FormFieldComponent, { static: true }) formfield!: FormFieldComponent;
 
-  ngOnInit() {
-    defineHiddenProp(this.field, '_formField', this.formfield);
-    defineHiddenProp(this.formfield, 'formControls', undefined);
-    this.formfield['showErrorsInitial'] = () => this.showError;
-    this.formfield['showHintsInitial'] = () => !this.showError;
+    public formFieldColSpans: ResponsiveFormBreakPoint[] = [
+        { minWidth: 576, value: 1 },
+        { maxWidth: 575, value: 2 },
+    ];
 
-    const disabledElement = this.formfield['disabledElement'].bind(this);
-    this.formfield['disabledElement'] = () => {
-      if (this.formfield.controlElementRefs.length === 0) {
-        return false;
-      }
+    ngOnInit() {
+        defineHiddenProp(this.field, '_formField', this.formfield);
+        defineHiddenProp(this.formfield, 'formControls', undefined);
+        this.formfield['showErrorsInitial'] = () => this.showError;
+        this.formfield['showHintsInitial'] = () => !this.showError;
 
-      return disabledElement();
-    };
-  }
+        const disabledElement = this.formfield['disabledElement'].bind(this);
+        this.formfield['disabledElement'] = () => {
+            if (this.formfield.controlElementRefs.length === 0) {
+                return false;
+            }
+
+            return disabledElement();
+        };
+    }
 }

@@ -1,23 +1,19 @@
 import { ConfigOption } from '@ngx-formly/core';
 import { FormlyWrapperFormField } from './form-field.wrapper';
-import { FormlyWrapperHorizontalField } from './horizontal-field.wrapper';
-import { FormlyWrapperVerticalField } from './vertical-field.wrapper';
+import { FormlyWrapperFieldset } from './form-fieldset.wrapper';
 
 export function withFormlyFormField(): ConfigOption {
+  
   return {
     wrappers: [
       {
-        name: 'kendo-form-field',
+        name: 'wrapper-kendo-formfield',
         component: FormlyWrapperFormField,
       },
       {
-        name: 'kendo-form-field-horizontal',
-        component: FormlyWrapperHorizontalField,
-      },
-      {
-        name: 'kendo-form-field-vertical',
-        component: FormlyWrapperVerticalField,
-      },
+        name: 'wrapper-kendo-fieldset',
+        component: FormlyWrapperFieldset,
+      }
     ],
   };
 }

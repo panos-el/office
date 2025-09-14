@@ -7,7 +7,7 @@ export function withFormlyFieldInput(): ConfigOption {
       {
         name: 'input',
         component: FormlyFieldInput,
-        wrappers: ['kendo-form-field-horizontal'],
+        wrappers: ['wrapper-kendo-formfield'],
       },
       { name: 'string', extends: 'input' },
       {

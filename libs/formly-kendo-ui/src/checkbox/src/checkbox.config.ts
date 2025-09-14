@@ -7,12 +7,8 @@ export function withFormlyFieldCheckbox(): ConfigOption {
       {
         name: 'kendo-checkbox',
         component: FormlyFieldCheckbox,
-        wrappers: ['form-field-horizontal'],
-      },
-      {
-        name: 'boolean',
-        extends: 'checkbox',
-      },
-    ],
+        wrappers: ['wrapper-kendo-formfield'],
+      }
+    ]
   };
 }

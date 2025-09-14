@@ -14,6 +14,9 @@ import { appRoutes } from './app.routes';
 import { AFTER_APP_INITIALIZER, APP_PROVIDERS, appInitializer, authInterceptor, xsrfInterceptor } from '@office/core';
 import { registerLocaleData } from '@angular/common';
 
+import '@progress/kendo-angular-intl/locales/en/all';
+import '@progress/kendo-angular-intl/locales/el/all';
+
 // load the data for Greek and U.S. English
 import localeEl from '@angular/common/locales/el';
 import localeEn from '@angular/common/locales/en';

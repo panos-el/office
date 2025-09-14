@@ -1,15 +1,18 @@
 import { Component, ChangeDetectionStrategy, Type } from '@angular/core';
-import { FieldTypeConfig, FormlyFieldConfig } from '@ngx-formly/core';
+import { FieldTypeConfig, FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { FieldType, BaseFormlyFieldProps } from '../../form-field';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { KENDO_TEXTAREA } from '@progress/kendo-angular-inputs';
 
 interface TextAreaProps extends BaseFormlyFieldProps {}
 
 export interface FormlyTextAreaFieldConfig extends FormlyFieldConfig<TextAreaProps> {
-  type: 'kendo-textarea' | Type<FormlyFieldTextArea>;
+  type: 'kendo-textarea' | Type<FormlyFieldTextArea>
 }
 
 @Component({
-  standalone: false,
+  imports: [CommonModule, ReactiveFormsModule, FormlyModule, KENDO_TEXTAREA],
   selector: 'formly-field-kendo-textarea',
   template: ` <textarea kendoTextArea [formControl]="formControl" [formlyAttributes]="field"></textarea> `,
   changeDetection: ChangeDetectionStrategy.OnPush,

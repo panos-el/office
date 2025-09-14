@@ -1,24 +1,26 @@
-import { Component, computed, OnDestroy, Renderer2, ViewChild } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import { filter, Subscription } from 'rxjs';
+import { filter, firstValueFrom, Subscription } from 'rxjs';
 import { AppTopbar } from './app.topbar';
 import { AppSidebar } from './app.sidebar';
 import { LayoutService } from '../../layout/service/layout.service';
 import { AppConfigurator } from './app.configurator';
 import { AppBreadcrumb } from './app.breadcrumb';
 import { AppFooter } from './app.footer';
+import { BASE_URL } from '@office/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-layout',
     standalone: true,
-    imports: [CommonModule, AppTopbar, AppSidebar, RouterModule, AppConfigurator, AppBreadcrumb, AppFooter],
+    imports: [CommonModule, AppTopbar, AppSidebar, RouterModule, AppConfigurator/* , AppBreadcrumb */, AppFooter],
     template: `<div class="layout-container" [ngClass]="containerClass()">
         <div app-topbar></div>
         <div app-sidebar></div>
 
         <div class="layout-content-wrapper">
-            <nav app-breadcrumb></nav>
+            <!-- <nav app-breadcrumb></nav> -->
             <div class="layout-content">
                 <router-outlet></router-outlet>
             </div>
@@ -28,7 +30,7 @@ import { AppFooter } from './app.footer';
         <div class="layout-mask animate-fadein"></div>
     </div> `
 })
-export class AppLayout implements OnDestroy {
+export class AppLayout implements OnInit, OnDestroy {
     overlayMenuOpenSubscription: Subscription;
 
     menuOutsideClickListener: any;
@@ -38,6 +40,9 @@ export class AppLayout implements OnDestroy {
     @ViewChild(AppSidebar) appSidebar!: AppSidebar;
 
     @ViewChild(AppTopbar) appTopbar!: AppTopbar;
+
+    baseUrl = inject(BASE_URL);
+    httpClient = inject(HttpClient);
 
     constructor(
         public layoutService: LayoutService,
@@ -78,6 +83,14 @@ export class AppLayout implements OnDestroy {
         this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
             this.hideMenu();
         });
+    }
+
+    ngOnInit(): void {
+            const url = `${this.baseUrl}api/account/getMainMenu`;
+    
+            firstValueFrom(this.httpClient.get<any>(url)).then((result) => {
+                this.layoutService.mainMenu.set(result.menu);
+            });
     }
 
     hideMenu() {

@@ -7,7 +7,7 @@ export function withFormlyFieldSelectAsync(): ConfigOption {
       {
         name: 'kendo-select-async',
         component: FormlyFieldSelectAsync,
-        wrappers: ['kendo-form-field-horizontal'],
+        wrappers: ['wrapper-kendo-formfield'],
       }
     ],
   };

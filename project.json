@@ -9,11 +9,19 @@
   "targets": {
     "build": {
       "executor": "@angular/build:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
-        "outputPath": "../server/Nop.Web/wwwroot",
+        "outputPath": {
+          "base": "../server/Nop.Web/wwwroot",
+          "browser": ""
+        },
         "browser": "./src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js",
+          "@angular/localize/init"
+        ],
         "tsConfig": "tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -23,9 +31,13 @@
           },
           "./src/assets"
         ],
-        "styles": [          
-          {"input": "node_modules/@progress/kendo-theme-default/dist/default-ocean-blue.scss" },
-          {"input": "node_modules/@progress/kendo-font-icons/dist/index.css" },
+        "styles": [
+          {
+            "input": "node_modules/@progress/kendo-theme-default/dist/default-ocean-blue.scss"
+          },
+          {
+            "input": "node_modules/@progress/kendo-font-icons/dist/index.css"
+          },
           "./src/assets/styles.scss"
         ]
       },
@@ -75,7 +87,9 @@
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
-        "lintFilePatterns": ["./src"]
+        "lintFilePatterns": [
+          "./src"
+        ]
       }
     },
     "serve-static": {

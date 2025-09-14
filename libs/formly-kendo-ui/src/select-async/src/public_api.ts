@@ -1,3 +1,3 @@
 export { withFormlyFieldSelectAsync } from './select.config';
-export { FormlySelectAsyncModule } from './select.module';
-export { FormlyFieldSelectAsync, FormlySelectAsyncFieldConfig } from './select.type';
+export { FormlyFieldSelectAsync } from './select.type';
+export type { FormlySelectAsyncFieldConfig } from './select.type';

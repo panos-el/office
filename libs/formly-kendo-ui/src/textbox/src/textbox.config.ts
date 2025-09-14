@@ -7,7 +7,7 @@ export function withFormlyFieldTextBox(): ConfigOption {
       {
         name: 'kendo-textbox',
         component: FormlyFieldTextBox,
-        wrappers: ['kendo-form-field-horizontal'],
+        wrappers: ['wrapper-kendo-formfield'],
       },
     ],
   };

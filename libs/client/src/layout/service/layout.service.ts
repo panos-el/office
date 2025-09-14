@@ -71,6 +71,8 @@ export class LayoutService {
         menuProfileActive: false
     };
 
+    mainMenu = signal<any[]>([]);
+
     layoutConfig = signal<layoutConfig>(this._config);
 
     layoutState = signal<LayoutState>(this._state);

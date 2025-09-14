@@ -1,3 +1,3 @@
 export { withFormlyFieldTextBox } from './textbox.config';
-export { FormlyTextBoxModule } from './textbox.module';
-export { FormlyFieldTextBox, FormlyTextBoxFieldConfig } from './textbox.type';
+export { FormlyFieldTextBox } from './textbox.type';
+export type { FormlyTextBoxFieldConfig } from './textbox.type';

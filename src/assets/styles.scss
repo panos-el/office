@@ -85,6 +85,7 @@
 /*fic primeNg*/
 .layout-topbar {
     border-bottom: none !important;
+    z-index: 99999;
 }
 /*fix primeNg layout-content padding*/
 .layout-content-wrapper .layout-content {
@@ -218,4 +219,54 @@ formly-field:nth-last-of-type(1) > * > .field.grid {
 .k-dialog-wrapper .k-dialog .k-dialog-content {
   flex-grow: 1;
   overflow: auto;
+}
+
+/* Put this in styles.scss (global) or the component stylesheet with ::ng-deep */
+formly-form, formly-field, formly-group,
+formly-wrapper-kendo-fieldset,
+formly-wrapper-kendo-formfield {
+    display: contents;
+}
+.k-form.k-form-plaisio {    
+    padding: 0 20px 20px;
+    border: 1px solid var(--kendo-color-border, rgba(0, 0, 0, 0.08));
+    border-radius: 4px;
+    background: #f8fafc;
+}
+.k-form .k-form-fieldset .k-form-legend {
+    font-weight: 600;
+    color: var(--kendo-color-primary, #1274AC);
+    text-transform: none;
+}
+.k-form .k-form-field label {
+    font-weight: 600;
+}
+.k-form-horizontal .k-form-field > .k-label, 
+.k-form-horizontal .k-form-field > kendo-label, 
+.k-form-horizontal .k-form-field > .k-form-label {
+    width: 40%;
+}
+.k-form-horizontal .k-form-field-wrap {
+    max-width: calc(100% - 40% - var(--kendo-spacing-2\.5, 0.625rem));
+}
+.k-form .k-form-fieldset {
+  margin-top: 0 !important;
+}
+/* Per-field vertical override inside a horizontal Kendo Form */
+.k-form.k-form-horizontal .k-form-field.k-ff-vertical {
+  display: flex;               /* horizontal forms use flex; keep it */
+  flex-direction: column;      /* stack label + editor */
+  align-items: stretch;
+}
+
+.k-form.k-form-horizontal .k-form-field.k-ff-vertical > .k-form-label,
+.k-form.k-form-horizontal .k-form-field.k-ff-vertical > .k-label,
+.k-form.k-form-horizontal .k-form-field.k-ff-vertical > kendo-label {
+  width: 100% !important;      /* undo 40% */
+  margin-inline-end: 0;        /* remove the gap used in horizontal */
+}
+
+.k-form.k-form-horizontal .k-form-field.k-ff-vertical > .k-form-field-wrap {
+  max-width: 100% !important;  /* undo 60% */
+  width: 100%;
 }

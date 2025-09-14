@@ -23,8 +23,11 @@
 
             </kendo-toolbar>
 
-            <form [formGroup]="form" class="mt-3">
-                <formly-form [form]="form" [model]="model" [fields]="fields" [options]="options"></formly-form>
+            <form kendoForm class="k-form-plaisio mt-3"
+                            [formGroup]="form" 
+                            [cols]="effectiveCols()" [gutters]="gutters"
+                            [orientation]="effectiveOrientation()">
+                <formly-form class="k-formly-form" [form]="form" [model]="model" [fields]="fields" [options]="options"></formly-form>
             </form>
 
         </div>

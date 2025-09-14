@@ -1,15 +1,18 @@
 import { Component, ChangeDetectionStrategy, Type } from '@angular/core';
-import { FieldTypeConfig, FormlyFieldConfig } from '@ngx-formly/core';
+import { FieldTypeConfig, FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { KENDO_NUMERICTEXTBOX, KENDO_TEXTBOX } from '@progress/kendo-angular-inputs';
 import { FieldType, BaseFormlyFieldProps } from '../../form-field';
 
 interface InputProps extends BaseFormlyFieldProps {}
 
 export interface FormlyInputFieldConfig extends FormlyFieldConfig<InputProps> {
-  type: 'input' | Type<FormlyFieldInput>;
+  type: 'input' | Type<FormlyFieldInput>
 }
 
 @Component({
-  standalone: false,
+  imports: [CommonModule, ReactiveFormsModule, FormlyModule, KENDO_TEXTBOX, KENDO_NUMERICTEXTBOX],
   selector: 'formly-field-kendo-input',
   template: `
     <input

@@ -1,18 +1,25 @@
-import { Component, Directive, EventEmitter, inject, Injectable, Input, OnDestroy, OnInit, Output } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { FormGroup, ReactiveFormsModule, UntypedFormGroup } from "@angular/forms";
-import { KENDO_TOOLBAR } from "@progress/kendo-angular-toolbar";
+import { Component, computed, Directive, effect, EventEmitter, inject, Injectable, input, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, ReactiveFormsModule, UntypedFormGroup } from '@angular/forms';
+import { KENDO_TOOLBAR } from '@progress/kendo-angular-toolbar';
 import { FormlyForm, FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
-import { PrimeNG } from "primeng/config";
-import { ToastrService } from "ngx-toastr";
+import { PrimeNG } from 'primeng/config';
+import { ToastrService } from 'ngx-toastr';
 
-import { BASE_URL, ClientDataService, DialogResultEnum, EditFormOptions, getLeafNodesWithKeys, mapDateProperties, stateAnimation } from "@office/core";
-import { CommonModule } from "@angular/common";
+import { BASE_URL, ClientDataService, DialogResultEnum, EditFormOptions, getLeafNodesWithKeys, mapDateProperties, stateAnimation } from '@office/core';
+import { CommonModule } from '@angular/common';
 
 import clonedeep from 'lodash.clonedeep';
 import isequal from 'lodash.isequal';
-import { ConfirmationDialogService } from "../confirmation-dialog/confirmation-dialog.service";
-import { ConfirmationDialogOptions } from "../confirmation-dialog/confirmation-dialog.component";
+import { ConfirmationDialogService } from '../confirmation-dialog/confirmation-dialog.service';
+import { ConfirmationDialogOptions } from '../confirmation-dialog/confirmation-dialog.component';
+import { Gutters, KENDO_INPUTS, Orientation, ResponsiveFormBreakPoint } from '@progress/kendo-angular-inputs';
+
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { distinctUntilChanged, map } from 'rxjs';
+
+const SCREEN_SIZE = '(max-width: 576px)';
 
 export interface FormlyFieldPropsEvent {
     properties: { [key: string]: FormlyFieldConfig };
@@ -33,8 +40,8 @@ export class KendoEditFormContextService {
         return this._editForm as KendoEditFormComponent;
     }
 
-    register(form: KendoEditFormComponent) { 
-        this._editForm = form; 
+    register(form: KendoEditFormComponent) {
+        this._editForm = form;
     }
 
     clean() {
@@ -67,23 +74,23 @@ export class KendoEditFormDirective implements OnInit {
     providers: [
         /* NOT INCLUDE KendoEditFormContextService */
     ],
-    imports: [
-        CommonModule, ReactiveFormsModule, FormlyForm, KendoEditFormDirective,
-        KENDO_TOOLBAR
-    ],
+    imports: [CommonModule, ReactiveFormsModule, FormlyForm, KendoEditFormDirective, KENDO_TOOLBAR, KENDO_INPUTS],
     animations: [stateAnimation]
 })
-export class KendoEditFormComponent implements OnInit, OnDestroy
-{
+export class KendoEditFormComponent implements OnInit, OnDestroy {
     private primeng = inject(PrimeNG);
 
-    @Input() animate: boolean = true;  
+    @Input() animate: boolean = true;
     @Input() settingsEnable: boolean = false;
     @Input() settingsLabel = this.primeng.getTranslation('common.actions');
-    @Input() settingsData!: any[]; 
-    @Input() formOptions!: EditFormOptions; 
+    @Input() settingsData!: any[];
+    @Input() formOptions!: EditFormOptions;
+    @Input() gutters: string | number | Gutters | ResponsiveFormBreakPoint[] = { cols: 32, rows: 32};
 
     @Output() formlyFieldPropsChange: EventEmitter<FormlyFieldPropsEvent> = new EventEmitter();
+
+    orientation = input<Orientation>('horizontal');
+    cols        = input<number>(2);
 
     editFormDirective!: KendoEditFormDirective;
 
@@ -96,7 +103,7 @@ export class KendoEditFormComponent implements OnInit, OnDestroy
 
     url!: string;
     params!: { [key: string]: any };
-    
+
     originalModel: any;
     form = new UntypedFormGroup({});
     model: any;
@@ -104,13 +111,37 @@ export class KendoEditFormComponent implements OnInit, OnDestroy
     fields!: FormlyFieldConfig[];
 
     get isDirty() {
-        return !(isequal(this.model, this.originalModel));
+        return !isequal(this.model, this.originalModel);
     }
 
     private context = inject(KendoEditFormContextService);
     private dialogService = inject(ConfirmationDialogService);
 
     baseUrl = inject(BASE_URL);
+    bo = inject(BreakpointObserver);
+
+    readonly isSmall = toSignal(
+        this.bo.observe([SCREEN_SIZE]).pipe(
+        map(state => state.breakpoints[SCREEN_SIZE] === true),
+            distinctUntilChanged()
+        ),
+        {
+        // good initial value so first render matches current size (SSR-safe check)
+        initialValue: typeof window !== 'undefined' ? window.matchMedia(SCREEN_SIZE).matches : false
+        }
+    );
+    
+    readonly effectiveOrientation = computed<Orientation>(() =>
+        this.orientation() === 'horizontal'
+        ? (this.isSmall() ? 'vertical' : 'horizontal')
+        : this.orientation()
+    );
+
+    readonly effectiveCols = computed<number>(() =>
+        this.orientation() === 'horizontal'
+        ? (this.isSmall() ? 1 : 2)
+        : this.cols()
+    );
 
     constructor(
         private router: Router,
@@ -120,7 +151,7 @@ export class KendoEditFormComponent implements OnInit, OnDestroy
     ) {
         this.context.register(this);
     }
-    
+
     // Guard method to check if the form can be deactivated
     canDeactivate(): Promise<boolean> | boolean {
         if (!this.isDirty) return true;
@@ -130,10 +161,9 @@ export class KendoEditFormComponent implements OnInit, OnDestroy
             title: this.primeng.getTranslation('common.warning')
         };
 
-        return this.dialogService.open(options).then((result) => {                
-             return result === DialogResultEnum.Yes ? true : false;
+        return this.dialogService.open(options).then((result) => {
+            return result === DialogResultEnum.Yes ? true : false;
         });
-
     }
 
     ngOnInit(): void {
@@ -172,15 +202,15 @@ export class KendoEditFormComponent implements OnInit, OnDestroy
         const editParams: { [key: string]: any } = { ...(this.formOptions?.editParams ?? {}), id };
 
         const action = isCreate ? this.formOptions.createUrl : this.formOptions.editUrl;
-        
+
         this.params = isCreate ? createParams : editParams;
         this.url = `${this.baseUrl}${action}`;
     }
 
-    public loadForm() {  
-
-        this.loading = true;     
-        this.dataService.fetchJsonBodyGet(this.url, this.params)
+    public loadForm() {
+        this.loading = true;
+        this.dataService
+            .fetchJsonBodyGet(this.url, this.params)
             .then((result: any) => {
                 mapDateProperties(result.model);
                 this.originalModel = clonedeep(result.model);
@@ -198,36 +228,34 @@ export class KendoEditFormComponent implements OnInit, OnDestroy
             })
             .catch((error: Error) => {
                 Promise.reject(error);
-            }).finally(() => this.loading = false);
+            })
+            .finally(() => (this.loading = false));
     }
 
-    public saveChanges(deactivating: boolean = false) {    
-        
+    public saveChanges(deactivating: boolean = false) {
         this.loading = true;
-        this.dataService.fetchJsonBodyPost(this.url, this.model, this.params)
+        this.dataService
+            .fetchJsonBodyPost(this.url, this.model, this.params)
             .then((result: any) => {
                 this.options.resetModel!();
 
                 const nav = !deactivating
-                ? this.router.navigate([this.formOptions.parentUrl], { skipLocationChange: true })
-                    .then(() => this.router.navigate([this.formOptions.parentUrl, result.id], { replaceUrl: true }))
-                : this.router.navigate([this.formOptions.parentUrl]);
+                    ? this.router.navigate([this.formOptions.parentUrl], { skipLocationChange: true }).then(() => this.router.navigate([this.formOptions.parentUrl, result.id], { replaceUrl: true }))
+                    : this.router.navigate([this.formOptions.parentUrl]);
 
-                nav.then(() =>
-                    this.toastrService.success(this.primeng.getTranslation("message.successfullySaved"))
-                );
+                nav.then(() => this.toastrService.success(this.primeng.getTranslation('message.successfullySaved')));
             })
             .catch((error: Error) => {
                 Promise.reject(error);
-            }).finally(() => this.loading = false);
+            })
+            .finally(() => (this.loading = false));
     }
-    
-    public cancelChanges() {  
+
+    public cancelChanges() {
         this.options.resetModel!();
     }
-    
+
     public goBack() {
-        this.router.navigate([this.formOptions.parentUrl]); 
+        this.router.navigate([this.formOptions.parentUrl]);
     }
-    
 }

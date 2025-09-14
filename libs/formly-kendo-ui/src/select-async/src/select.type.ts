@@ -1,8 +1,11 @@
 import { Component, ChangeDetectionStrategy, Type, inject } from '@angular/core';
-import { FieldTypeConfig, FormlyFieldConfig } from '@ngx-formly/core';
+import { FieldTypeConfig, FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { FieldType, BaseFormlyFieldProps } from '../../form-field';
-import { FormlyFieldSelectProps } from '@ngx-formly/core/select';
+import { FormlyFieldSelectProps, FormlySelectModule } from '@ngx-formly/core/select';
 import { UiKendoService } from '../../lib/ui-kendo.service';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { KENDO_DROPDOWNLIST } from '@progress/kendo-angular-dropdowns';
 
 interface SelectAsyncProps extends BaseFormlyFieldProps, FormlyFieldSelectProps {
   primitive?: boolean;
@@ -11,11 +14,11 @@ interface SelectAsyncProps extends BaseFormlyFieldProps, FormlyFieldSelectProps 
 }
 
 export interface FormlySelectAsyncFieldConfig extends FormlyFieldConfig<SelectAsyncProps> {
-  type: 'kendo-select-async' | Type<FormlyFieldSelectAsync>;
+  type: 'kendo-select-async' | Type<FormlyFieldSelectAsync>
 }
 
 @Component({
-  standalone: false,
+  imports: [CommonModule, ReactiveFormsModule, FormlyModule, FormlySelectModule, KENDO_DROPDOWNLIST],
   selector: 'formly-field-kendo-select-async',
   template: `
     <kendo-dropdownlist

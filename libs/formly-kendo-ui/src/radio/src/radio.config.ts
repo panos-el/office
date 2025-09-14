@@ -7,7 +7,7 @@ export function withFormlyFieldRadio(): ConfigOption {
       {
         name: 'kendo-radio',
         component: FormlyFieldRadio,
-        wrappers: ['kendo-form-field-horizontal'],
+        wrappers: ['wrapper-kendo-formfield'],
       },
     ],
   };

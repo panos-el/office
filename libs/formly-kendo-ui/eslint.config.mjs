@@ -40,6 +40,7 @@ export default [
             ],
             "@angular-eslint/prefer-standalone": "off",
             "@angular-eslint/component-selector": "off",
+            "@typescript-eslint/no-explicit-any": "off",
             "@typescript-eslint/no-empty-interface": "off",
             "@typescript-eslint/no-empty-object-type": "off",
         }
@@ -47,11 +48,16 @@ export default [
     {
         files: ['**/*.html'],
         // Override or add rules here
-        rules: {}
+        rules: {
+            "@angular-eslint/template/alt-text": "off",
+        }
     },
     {
         rules: {
             "@nx/dependency-checks": "off",
+            // 'no-restricted-imports': ['error', {
+            //     paths: [{ name: '@office/formly-kendo-ui', message: 'Use relative imports inside this lib.' }]
+            // }]
         }
     },
 ];

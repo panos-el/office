@@ -7,7 +7,7 @@ export function withFormlyFieldTextArea(): ConfigOption {
       {
         name: 'kendo-textarea',
         component: FormlyFieldTextArea,
-        wrappers: ['kendo-form-field-vertical'],
+        wrappers: ['wrapper-kendo-formfield'],
       },
     ],
   };

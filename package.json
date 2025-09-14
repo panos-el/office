@@ -87,6 +87,7 @@
         "@angular/cli": "~20.2.0",
         "@angular/compiler-cli": "~20.2.0",
         "@angular/language-service": "~20.2.0",
+        "@angular/cdk": "~20.2.0",
         "@types/lodash.clonedeep": "^4.5.9",
         "@types/lodash.isequal": "^4.5.8",
         "@types/node": "24.3.1",

@@ -20,7 +20,7 @@ import { RippleModule } from 'primeng/ripple';
         }"
     >
         <div class="layout-topbar-start">
-            <a class="layout-topbar-logo" routerLink="/">
+            <a class="layout-topbar-logo" routerLink="/client">
                 <svg width="100" viewBox="0 0 64 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3.528 0.399995H7.7L10.892 20H7.812L7.252 16.108V16.164H3.752L3.192 20H0.335999L3.528 0.399995ZM6.888 13.504L5.516 3.816H5.46L4.116 13.504H6.888Z" fill="var(--topbar-item-text-color)" />
                     <path d="M10.7813 0.399995H13.8893L15.9053 15.604H15.9613L17.9773 0.399995H20.8053L17.8373 20H13.7493L10.7813 0.399995Z" fill="var(--topbar-item-text-color)" />

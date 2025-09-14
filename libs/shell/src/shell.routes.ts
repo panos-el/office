@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { Landing } from './components/landing/landing';
 import { ShellLayout } from './components/shell-layout/shell-layout';
+import { LoginComponent } from './components/login/login.component';
 
 export const SHELL_ROUTES: Routes = [
   {
@@ -8,13 +9,13 @@ export const SHELL_ROUTES: Routes = [
     component: ShellLayout,
     children: [
       {
-        path: 'Landing',
+        path: 'landing',
         component: Landing
       },
-      // {
-      //   path: 'login',
-      //   component: LoginComponent
-      // },
+      {
+        path: 'login',
+        component: LoginComponent
+      },
       // {
       //   path: 'change-password',
       //   loadComponent: () => import('./components/change-password/change-password.component').then(m => m.ChangePasswordComponent)

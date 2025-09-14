@@ -11,11 +11,11 @@ export const CLIENT_ROUTES: Routes = [
     {
         path: '',
         component: AppLayout,
-        canActivate: [CanActivateGuard],
+        // canActivate: [CanActivateGuard],
         children: [
             {
                 path: '',
-                canActivateChild: [CanActivateChildGuard],
+                // canActivateChild: [CanActivateChildGuard],
                 children: [
                     {
                         path: "", 
