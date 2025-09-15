@@ -82,7 +82,7 @@
 .toast-container .ngx-toastr.ngx-toastr-width {
     width: 600px;
 }
-/*fic primeNg*/
+/*fix primeNg*/
 .layout-topbar {
     border-bottom: none !important;
     z-index: 99999;
@@ -107,6 +107,14 @@
     .k-column-title {
         color: #191970;
     }
+}
+
+/* Fix kendo checkbox grid column*/
+.k-grid .k-grid-header .k-table-th {
+    text-align: center;
+}
+.k-grid td, .k-grid .k-table-td {
+    text-align: center;
 }
 /*fix kendo-grid dropdown button popup*/
 .dropdown-grid-popup .k-menu-group .k-item.k-focus > .k-link {

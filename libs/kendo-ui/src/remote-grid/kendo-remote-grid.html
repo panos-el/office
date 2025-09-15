@@ -1,7 +1,7 @@
 <div kendoRemoteGridDirective>
     @if (gridData) {
         <div [@animationState]="animate ? 'active' : 'inactive'">
-            <h5 *ngIf="pageTitleEnable">{{gridConfig.title}}</h5>
+            @if(pageTitleEnable === true){<div class="mb-4 text-2xl font-medium">{{gridConfig.title}}</div>}
             <div *ngIf="filterPanelVisible" [@menu]="'inline'">
                 <kendo-filter #filter [filters]="filterExpressions" [value]="filterPanelValue"></kendo-filter>
                 <div class="k-dialog-actions k-actions-srart" style="border-color: #e0e0e0">
