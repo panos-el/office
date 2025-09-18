@@ -1,11 +1,13 @@
-import { Component, Directive, Injectable, inject, Input, OnInit, TemplateRef, Output, EventEmitter, ViewChild, forwardRef } from '@angular/core';
+import { Component, Directive, Injectable, inject, Input, OnInit, 
+    TemplateRef, Output, EventEmitter, ViewChild, forwardRef, InjectionToken} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ExcelExportData } from '@progress/kendo-angular-excel-export';
 // import { isPresent } from '@progress/kendo-angular-common';
 import { FilterExpression, KENDO_FILTER } from "@progress/kendo-angular-filter";
-import { CellClickEvent, ColumnMenuSettings, DataStateChangeEvent, GridComponent, GridDataResult, GroupableSettings, KENDO_GRID, KENDO_GRID_EXCEL_EXPORT, KENDO_GRID_PDF_EXPORT } from '@progress/kendo-angular-grid';
+import { CellClickEvent, ColumnMenuSettings, DataStateChangeEvent, GridComponent, GridDataResult, 
+    GroupableSettings, KENDO_GRID, KENDO_GRID_EXCEL_EXPORT, KENDO_GRID_PDF_EXPORT } from '@progress/kendo-angular-grid';
 import { KENDO_BUTTONS } from '@progress/kendo-angular-buttons';
 import { KENDO_INDICATORS } from "@progress/kendo-angular-indicators";
 import { KENDO_ICONS } from '@progress/kendo-angular-icons';
@@ -16,11 +18,13 @@ import {
     saveIcon
 } from "@progress/kendo-svg-icons";
 import { IntlModule, IntlService } from '@progress/kendo-angular-intl';
-import { AggregateDescriptor, CompositeFilterDescriptor, DataSourceRequestState, State, toDataSourceRequestString, translateDataSourceResultGroups } from '@progress/kendo-data-query';
+import { AggregateDescriptor, CompositeFilterDescriptor, DataSourceRequestState, State, 
+    toDataSourceRequestString, translateDataSourceResultGroups } from '@progress/kendo-data-query';
 import { PrimeNG } from 'primeng/config';
 
-import { BASE_URL, ClientDataService, DialogResultEnum, isIsoDateString, ListFormOptions, menuAnimation, stateAnimation, stringFormat } from '@office/core';
-import { GridConfig, GridSettings, KendoGridToken, PersistStateItem, mapDateFilter } from './api/public_api';
+import { BASE_URL, ClientDataService, DialogResultEnum, isIsoDateString, ListFormOptions, menuAnimation, 
+    stateAnimation, stringFormat } from '@office/core';
+import { GridConfig, GridSettings, IKendoGridToken, KENDO_GRID_TOKEN, PersistStateItem, mapDateFilter } from './api/public_api';
 import { SearchBoxComponent } from '../search-box/search-box';
 import { ConfirmationDialogService } from '../confirmation-dialog/public_api';
 import { PersistStateContextService } from './persist-state-ctx.service';
@@ -64,7 +68,7 @@ export class KendoRemoteGridDirective implements OnInit {
     selector: "kendo-remote-grid",
     templateUrl: "./kendo-remote-grid.html",
     providers: [
-        { provide: KendoGridToken, useExisting: KendoRemoteGridComponent },
+        { provide: KENDO_GRID_TOKEN, useExisting: forwardRef(() => KendoRemoteGridComponent) },
         PersistStateContextService, PersistStateService, KendoRemoteGridContextService
     ],
     animations: [menuAnimation, stateAnimation],
@@ -75,7 +79,7 @@ export class KendoRemoteGridDirective implements OnInit {
         StickyGridHeaderDirective, KendoRemoteGridDirective, SearchBoxComponent
     ]
 })
-export class KendoRemoteGridComponent extends KendoGridToken implements OnInit  {
+export class KendoRemoteGridComponent implements OnInit, IKendoGridToken  {
     @ViewChild(GridComponent) public grid!: GridComponent;
     @Input() buttonTemplates!: { [key: string]: TemplateRef<any> }; // Dynamic templates
     @Input() animate: boolean = true;
@@ -198,7 +202,6 @@ export class KendoRemoteGridComponent extends KendoGridToken implements OnInit  
         private dialogService: ConfirmationDialogService,
         private ptx: PersistStateContextService,
         private ctx: KendoRemoteGridContextService) {
-        super();
         this.ptx.grid = this;
         this.ctx.grid = this;
     }
@@ -505,4 +508,16 @@ export class KendoRemoteGridComponent extends KendoGridToken implements OnInit  
         return result;
     }
 
+}
+export interface LibHeaderApi { doSomething(): void; }
+export const LIB_HEADER_TOKEN = new InjectionToken<LibHeaderApi>('LIB_HEADER_TOKEN');
+
+@Component({
+  selector: 'lib-header',
+  template: '',
+  providers: [{ provide: LIB_HEADER_TOKEN, useExisting: forwardRef(() => LibHeaderComponent) }]
+})
+export class LibHeaderComponent implements LibHeaderApi {
+  private value = 6;
+  doSomething() { console.log();}
 }

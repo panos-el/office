@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, ContentChild, inject, OnInit, ViewChild } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BASE_URL, ClientDataService, ListFormOptions, LocalizationService } from '@office/core';
-import { KendoGridToken, KendoRemoteGridComponent } from '@office/kendo-ui';
+import { IKendoGridToken, KENDO_GRID_TOKEN, KendoRemoteGridComponent } from '@office/kendo-ui';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './log-list.html',
 })
 export class LogListComponent implements OnInit {    
-    @ContentChild(KendoGridToken) grid!: KendoGridToken; 
+    @ViewChild(KENDO_GRID_TOKEN) grid!: IKendoGridToken;
     
     options: ListFormOptions = {
       propertiesUrl: 'api/log/list',
