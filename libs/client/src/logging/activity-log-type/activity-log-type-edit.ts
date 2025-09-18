@@ -3,8 +3,8 @@ import { EditFormOptions } from "@office/core";
 import { KendoEditFormComponent } from "@office/kendo-ui";
 
 @Component({
-    selector: "activity-log-type-edit",
     imports: [KendoEditFormComponent],
+    selector: "activity-log-type-edit",
     templateUrl: './activity-log-type-edit.html',
 })
 export class ActivityLogTypeEditComponent {

@@ -5,8 +5,8 @@ import { ListFormOptions } from '@office/core';
 import { KendoRemoteGridComponent } from '@office/kendo-ui';
 
 @Component({
-  selector: 'activity-log-type-list',
   imports: [CommonModule, ReactiveFormsModule, KendoRemoteGridComponent],
+  selector: 'activity-log-type-list',
   templateUrl: './activity-log-type-list.html',
 })
 export class ActivityLogTypeListComponent {    

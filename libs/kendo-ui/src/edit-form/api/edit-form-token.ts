@@ -1,9 +1,13 @@
 // grid-token.ts
 import { InjectionToken } from '@angular/core';
-import { Observable } from 'rxjs';
+import { UntypedFormGroup } from '@angular/forms';
+import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 
 export interface IEditFormToken {
-    canDeactivate(): Observable<boolean> | Promise<boolean> | boolean;
+    form: UntypedFormGroup;
+    model: any;
+    options: FormlyFormOptions;
+    fields: FormlyFieldConfig[];
 }
 
 // Create a custom injection token for the grid component.

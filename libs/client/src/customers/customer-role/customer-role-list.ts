@@ -5,8 +5,8 @@ import { ListFormOptions } from '@office/core';
 import { KendoRemoteGridComponent } from '@office/kendo-ui';
 
 @Component({
-  selector: 'customer-role-list',
   imports: [CommonModule, ReactiveFormsModule, KendoRemoteGridComponent],
+  selector: 'customer-role-list',
   templateUrl: './customer-role-list.html',
 })
 export class CustomerRoleListComponent {    

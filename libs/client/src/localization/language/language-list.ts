@@ -1,59 +1,56 @@
-import { Component, Inject, OnInit, TemplateRef, ViewChild } from "@angular/core";
-import { BASE_URL, ClientDataService, LocalizationService } from "@office/core";
-import { ToastrService } from "ngx-toastr";
-import { PrimeNG } from 'primeng/config';
+import { CommonModule } from '@angular/common';
+import { Component, ContentChild, inject, Inject, OnInit, ViewChild } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BASE_URL, ClientDataService, ListFormOptions, LocalizationService } from '@office/core';
+import { KendoGridToken, KendoRemoteGridComponent } from '@office/kendo-ui';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
-    selector: "language-list",
-    templateUrl: "./language-list.html"
+    imports: [CommonModule, ReactiveFormsModule, KendoRemoteGridComponent],
+    selector: 'language-list',
+    templateUrl: './language-list.html'
 })
 export class LanguageListComponent implements OnInit {
-    @ViewChild('actionsTemplate', { static: true }) actionsTemplate!: TemplateRef<any>;
-    getApiUrl = 'language/list';
-    postApiUrl = 'language/list';
-    pathUrl = 'dashboard/language';
-    customMenuLabel: string;
+    @ContentChild(KendoGridToken) grid!: KendoGridToken; 
+
+    options: ListFormOptions = {
+        propertiesUrl: 'api/language/list',
+        dataSourceUrl: 'api/language/list',
+        deleteUrl: 'api/language/delete',
+        // deleteSelectedUrl: 'api/language/deleteSelected',
+        pathUrl: 'client/language'
+    };
+
     customMenuData!: any[];
     public loading = false;
 
+    baseUrl = inject(BASE_URL);
+
     constructor(
-        @Inject(BASE_URL) private baseUrl: string,
         private dataService: ClientDataService,
         private localizationService: LocalizationService,
-        private primengConfig: PrimeNG,
-        private toastrService: ToastrService) {
-        this.customMenuLabel = this.primengConfig.getTranslation('common.settings');
-    }
+        private toastrService: ToastrService
+    ) {}
 
     ngOnInit(): void {
-
         this.customMenuData = [
+            { text: this.localizationService.translate('common.actions'), disabled: true, cssClass: 'k-group-menu' },
             { text: this.localizationService.translate('common.importResources'), click: () => this.importResources() }
         ];
     }
 
     importResources() {
-        const url = `${this.baseUrl}/language/importResources`;
+        const url = `${this.baseUrl}api/language/importResources`;
 
         this.loading = true;
-        this.dataService.fetchJsonBodyPost(url, {})
+        this.dataService
+            .fetchJsonBodyPost(url, {})
             .then(() => {
-                this.toastrService.success(this.primengConfig.getTranslation('message.insertionCompleted'));
+                this.toastrService.success(this.localizationService.translate('message.insertionCompleted'));
             })
             .catch((err: Error) => {
                 Promise.reject(err);
-            }).finally(() => this.loading = false);
+            })
+            .finally(() => (this.loading = false));
     }
-
-    onColumnsChange(columnDefs: any[]): void {
-        // Dynamically assign templates to the column definitions
-        columnDefs.map((col) => {
-            if (col.field === 'actions') {
-                col['templateRef'] = this.actionsTemplate
-                //return { ...col, template: this.actionsTemplate };
-            }
-            return col;
-        });
-    }
-
 }

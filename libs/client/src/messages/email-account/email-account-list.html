@@ -1,0 +1,9 @@
+<ng-template #markTemplate let-dataItem="dataItem">
+    <button kendoButton (click)="markAsDefaultEmail(dataItem)">{{markLabel}}</button>
+</ng-template>
+
+<kendo-remote-grid
+    [formOptions]="options"
+    [buttonTemplates]="{ mark: markTemplate }">
+</kendo-remote-grid>
+

@@ -20,7 +20,7 @@ import { AggregateDescriptor, CompositeFilterDescriptor, DataSourceRequestState,
 import { PrimeNG } from 'primeng/config';
 
 import { BASE_URL, ClientDataService, DialogResultEnum, isIsoDateString, ListFormOptions, menuAnimation, stateAnimation, stringFormat } from '@office/core';
-import { GRID_TOKEN, GridConfig, GridSettings, IGridToken, PersistStateItem, mapDateFilter } from './api/public_api';
+import { GridConfig, GridSettings, KendoGridToken, PersistStateItem, mapDateFilter } from './api/public_api';
 import { SearchBoxComponent } from '../search-box/search-box';
 import { ConfirmationDialogService } from '../confirmation-dialog/public_api';
 import { PersistStateContextService } from './persist-state-ctx.service';
@@ -64,7 +64,7 @@ export class KendoRemoteGridDirective implements OnInit {
     selector: "kendo-remote-grid",
     templateUrl: "./kendo-remote-grid.html",
     providers: [
-        { provide: GRID_TOKEN, useExisting: forwardRef(() => KendoRemoteGridComponent) },
+        { provide: KendoGridToken, useExisting: KendoRemoteGridComponent },
         PersistStateContextService, PersistStateService, KendoRemoteGridContextService
     ],
     animations: [menuAnimation, stateAnimation],
@@ -75,7 +75,7 @@ export class KendoRemoteGridDirective implements OnInit {
         StickyGridHeaderDirective, KendoRemoteGridDirective, SearchBoxComponent
     ]
 })
-export class KendoRemoteGridComponent implements OnInit, IGridToken {
+export class KendoRemoteGridComponent extends KendoGridToken implements OnInit  {
     @ViewChild(GridComponent) public grid!: GridComponent;
     @Input() buttonTemplates!: { [key: string]: TemplateRef<any> }; // Dynamic templates
     @Input() animate: boolean = true;
@@ -95,6 +95,7 @@ export class KendoRemoteGridComponent implements OnInit, IGridToken {
     @Input() persistStateMenuEnable: boolean = true;
     settingsMenuEnable!: boolean
     settingsMenuData: any[] = [];
+    @Input() customMenuData!: any[];
 
     // Selectable    
     @Input() checkboxColumnEnable: boolean = true;
@@ -136,7 +137,7 @@ export class KendoRemoteGridComponent implements OnInit, IGridToken {
 
     remoteGridDirective!: KendoRemoteGridDirective;
 
-    loading: boolean = false;
+    @Input() loading: boolean = false;
     gridConfig!: GridConfig;
     gridData!: GridDataResult;
     state!: State; // { skip: 0, take: 100, group: [], filter: { filters: [], logic: "or" }, sort: [] };
@@ -197,6 +198,7 @@ export class KendoRemoteGridComponent implements OnInit, IGridToken {
         private dialogService: ConfirmationDialogService,
         private ptx: PersistStateContextService,
         private ctx: KendoRemoteGridContextService) {
+        super();
         this.ptx.grid = this;
         this.ctx.grid = this;
     }
@@ -238,6 +240,10 @@ export class KendoRemoteGridComponent implements OnInit, IGridToken {
             ];
 
             this.settingsMenuData.push(...persistStateMenuData);
+        }
+
+        if(this.customMenuData && this.customMenuData.length > 0) {
+            this.settingsMenuData.push(...this.customMenuData);
         }
 
         this.settingsMenuEnable = this.settingsMenuData.length > 0;

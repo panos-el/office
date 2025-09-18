@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Inject, ViewChild } from '@angular/core';
+import { Component, ContentChild, inject, OnInit, ViewChild } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { KENDO_BUTTONS } from '@progress/kendo-angular-buttons';
+import { KENDO_BUTTON } from '@progress/kendo-angular-buttons';
 import { BASE_URL, ClientDataService, ListFormOptions, LocalizationService } from '@office/core';
-import { KendoRemoteGridComponent, IGridToken, GRID_TOKEN } from '@office/kendo-ui';
+import { KendoRemoteGridComponent, KendoGridToken } from '@office/kendo-ui';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
+  imports: [CommonModule, ReactiveFormsModule, KendoRemoteGridComponent, KENDO_BUTTON],
   selector: 'currency-list',
-  imports: [CommonModule, ReactiveFormsModule, KENDO_BUTTONS, KendoRemoteGridComponent],
-  templateUrl: './currency-list.component.html',
+  templateUrl: './currency-list.html',
 })
-export class CurrencyListComponent {
-    @ViewChild('grid', { read: GRID_TOKEN }) grid!: IGridToken;
+export class CurrencyListComponent implements OnInit {
+    @ContentChild(KendoGridToken) grid!: KendoGridToken; 
     
     options: ListFormOptions = {
       propertiesUrl: 'api/currency/list',
@@ -23,7 +23,7 @@ export class CurrencyListComponent {
     };
 
     public loading = false;
-    public markLabel: string;
+    public markLabel!: string;
 
     baseUrl = inject(BASE_URL);
 
@@ -31,7 +31,10 @@ export class CurrencyListComponent {
         private dataService: ClientDataService,
         private toastrService: ToastrService,
         private localizationService: LocalizationService) {
-        this.markLabel = localizationService.translate("common.mark");
+    }
+
+    ngOnInit(): void {
+        this.markLabel = this.localizationService.translate("common.mark");
     }
 
     private mark(url: string, id: any) {

@@ -1,4 +1,4 @@
-import { Component, computed, Directive, effect, EventEmitter, inject, Injectable, input, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, computed, Directive, EventEmitter, forwardRef, inject, Injectable, input, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, ReactiveFormsModule, UntypedFormGroup } from '@angular/forms';
 import { KENDO_TOOLBAR } from '@progress/kendo-angular-toolbar';
@@ -18,10 +18,11 @@ import { Gutters, KENDO_INPUTS, Orientation, ResponsiveFormBreakPoint } from '@p
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged, map } from 'rxjs';
+import { EDIT_FORM_TOKEN, IEditFormToken } from './api/edit-form-token';
 
 const SCREEN_SIZE = '(max-width: 576px)';
 
-export interface FormlyFieldPropsEvent {
+export interface FormlyFormState {
     properties: { [key: string]: FormlyFieldConfig };
     model: any;
     form: FormGroup;
@@ -70,14 +71,15 @@ export class KendoEditFormDirective implements OnInit {
 
 @Component({
     selector: 'kendo-edit-form',
-    templateUrl: './edit-form.component.html',
+    templateUrl: './edit-form.html',
     providers: [
         /* NOT INCLUDE KendoEditFormContextService */
+        { provide: EDIT_FORM_TOKEN, useExisting: forwardRef(() => KendoEditFormComponent) }
     ],
     imports: [CommonModule, ReactiveFormsModule, FormlyForm, KendoEditFormDirective, KENDO_TOOLBAR, KENDO_INPUTS],
     animations: [stateAnimation]
 })
-export class KendoEditFormComponent implements OnInit, OnDestroy {
+export class KendoEditFormComponent implements OnInit, OnDestroy, IEditFormToken {
     private primeng = inject(PrimeNG);
 
     @Input() animate: boolean = true;
@@ -87,7 +89,7 @@ export class KendoEditFormComponent implements OnInit, OnDestroy {
     @Input() formOptions!: EditFormOptions;
     @Input() gutters: string | number | Gutters | ResponsiveFormBreakPoint[] = { cols: 32, rows: 32};
 
-    @Output() formlyFieldPropsChange: EventEmitter<FormlyFieldPropsEvent> = new EventEmitter();
+    @Output() FormlyFormStateChange: EventEmitter<FormlyFormState> = new EventEmitter();
 
     orientation = input<Orientation>('horizontal');
     cols        = input<number>(2);
@@ -105,7 +107,7 @@ export class KendoEditFormComponent implements OnInit, OnDestroy {
     params!: { [key: string]: any };
 
     originalModel: any;
-    form = new UntypedFormGroup({});
+    @Input() form = new UntypedFormGroup({});
     model: any;
     options: FormlyFormOptions = {};
     fields!: FormlyFieldConfig[];
@@ -222,7 +224,7 @@ export class KendoEditFormComponent implements OnInit, OnDestroy {
                     form: this.form
                 };
 
-                this.formlyFieldPropsChange.emit(properties);
+                this.FormlyFormStateChange.emit(properties);
                 this.pageTitle = result.form.title;
                 this.fields = result.form.fields;
             })

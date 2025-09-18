@@ -3,15 +3,15 @@ import { EditFormOptions } from "@office/core";
 import { KendoEditFormComponent } from "@office/kendo-ui";
 
 @Component({
-    selector: "currency-edit",
     imports: [KendoEditFormComponent],
-    templateUrl: './currency-edit.component.html',
+    selector: "store-edit",
+    templateUrl: './store-edit.html',
 })
-export class CurrencyEditComponent {
+export class StoreEditComponent {
     options: EditFormOptions = {
-        parentUrl: "client/currency",
-        createUrl: "api/currency/create",
-        editUrl: "api/currency/edit"
+        parentUrl: "client/store",
+        createUrl: "api/store/create",
+        editUrl: "api/store/edit"
     };
 
 }

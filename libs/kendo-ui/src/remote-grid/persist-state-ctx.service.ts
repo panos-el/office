@@ -114,7 +114,7 @@ export class PersistStateContextService {
             columns: columns
         };
 
-        const token = JSON.stringify(config, getCircularReplacer());
+        const token = JSON.stringify(config, getCircularReplacer(), 2);
 
         persistState.token = token;
 

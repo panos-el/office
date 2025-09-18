@@ -35,19 +35,18 @@ export class FormlyFieldAutocomplete extends FieldType<FieldTypeConfig<Autocompl
 
     override defaultOptions = {
         hooks: {
-            onInit: (field: FormlyFieldConfig) => {
-                const props = field.props as AutocompleteProps;
-                const options = props.options as any[];
+            onInit: (_field: FormlyFieldConfig) => {
+                const field = _field as FieldTypeConfig<AutocompleteProps>;
+                const options = field.props.options as any[];
 
-                props.data = options.slice();
+                field.props.data = options.slice();
             },
         }
     };
 
-    handleFilter(value: string, field: FormlyFieldConfig) {
-        const props = field.props as AutocompleteProps;
+    handleFilter(value: string, field: FieldTypeConfig<AutocompleteProps>) {
 
-        props.options = props?.data?.filter(
+        field.props.options = field.props.data?.filter(
             (s: any) => s.value.toLowerCase().indexOf(value.toLowerCase()) !== -1
         );
     }

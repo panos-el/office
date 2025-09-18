@@ -1,0 +1,7 @@
+
+<kendo-edit-form #editForm
+    [formOptions]="editOptions"
+    (FormlyFormStateChange)="onFormlyFormStateChange($event)">
+</kendo-edit-form>
+
+<formly-form-form [form]="form" [model]="model" [fields]="fields" [options]="options"></formly-form-form>

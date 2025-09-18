@@ -14,7 +14,7 @@ export interface FormlyTextAreaFieldConfig extends FormlyFieldConfig<TextAreaPro
 @Component({
   imports: [CommonModule, ReactiveFormsModule, FormlyModule, KENDO_TEXTAREA],
   selector: 'formly-field-kendo-textarea',
-  template: ` <textarea kendoTextArea [formControl]="formControl" [formlyAttributes]="field"></textarea> `,
+  template: ` <textarea kendoTextArea [rows]="props.rows" [formControl]="formControl" [formlyAttributes]="field"></textarea> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldTextArea extends FieldType<FieldTypeConfig<TextAreaProps>> {}

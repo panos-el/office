@@ -3,8 +3,8 @@ import { EditFormOptions } from "@office/core";
 import { KendoEditFormComponent } from "@office/kendo-ui";
 
 @Component({
-    selector: "customer-role-edit",
     imports: [KendoEditFormComponent],
+    selector: "customer-role-edit",
     templateUrl: './customer-role-edit.html',
 })
 export class CustomerRoleEditComponent {

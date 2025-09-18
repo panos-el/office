@@ -51,7 +51,7 @@
                     </button>
                     <button *ngIf="excelCommandEnable" kendoGridExcelCommand [svgIcon]="fileExcelIcon"></button>
                     <button *ngIf="pdfCommandEnable" kendoGridPDFCommand [svgIcon]="filePdfIcon"></button>
-                    <kendo-grid-column-chooser *ngIf="columnChooserCommandEnable"></kendo-grid-column-chooser>
+                    <kendo-grid-column-chooser *ngIf="columnChooserCommandEnable" [autoSync]="true"></kendo-grid-column-chooser>
                     <button kendoButton (click)="grid2.autoFitColumns()" [svgIcon]="displayInlineFlexIcon" [title]="autofitColumnsLabel"></button>
 
                     <span class="k-separator" style="color: #fafafa"></span>
@@ -69,9 +69,9 @@
                 </ng-template>
 
                 @if (checkboxColumnEnable) {
-                <kendo-grid-checkbox-column [width]="45"
-                                            [headerClass]="{ 'text-center': true }"
-                                            [class]="{ 'text-center': true, 'k-grid-checkbox-column': true }"
+                <kendo-grid-checkbox-column [width]="50"
+                                            [headerStyle]="{ 'text-align': 'center' }"
+                                            [style]="{ 'text-align': 'center' }"
                                             [resizable]="false"
                                             [columnMenu]="false"
                                             [showSelectAll]="showSelectAllEnable">
@@ -91,6 +91,7 @@
                     [locked]="col.locked" 
                     [sticky]="col.sticky" 
                     [format]="col.format" 
+                    [headerStyle]="col.headerStyle" 
                     [style]="col.style" 
                     [class]="col.class">
                     

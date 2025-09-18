@@ -110,11 +110,9 @@
 }
 
 /* Fix kendo checkbox grid column*/
-.k-grid .k-grid-header .k-table-th {
-    text-align: center;
-}
-.k-grid td, .k-grid .k-table-td {
-    text-align: center;
+.k-checkbox-wrap > .k-checkbox {
+    width: var(--kendo-spacing-5, 1.25rem);
+    height: var(--kendo-spacing-5, 1.25rem);
 }
 /*fix kendo-grid dropdown button popup*/
 .dropdown-grid-popup .k-menu-group .k-item.k-focus > .k-link {
@@ -168,6 +166,11 @@ kendo-grid-column-chooser > button.k-button {
     font-weight: 500;
 }
 .k-grid .k-column-title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.k-grid td, .k-grid .k-table-td {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

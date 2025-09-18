@@ -23,6 +23,9 @@ import { BaseFormlyFieldProps } from './base-formly-field-props';
             }
 
             <ng-container #fieldComponent></ng-container>
+
+            @if (props.description) {<kendo-formhint>{{ props.description }}</kendo-formhint>}
+            
         </kendo-formfield>
     `
 })

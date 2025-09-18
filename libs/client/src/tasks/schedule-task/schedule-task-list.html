@@ -1,0 +1,16 @@
+<ng-template #runNowTemplate let-dataItem="dataItem">
+    <button kendoButton size="small" (click)="runNow(dataItem)">{{runNowLabel}}</button>
+</ng-template>
+
+<kendo-remote-grid #grid
+    [formOptions]="options"
+    [insertCommandEnable]="false"
+    [deleteCommandEnable]="false"
+    [filterCommandEnable]="false"
+    [columnChooserCommandEnable]="false"
+    [persistStateMenuEnable]="false"
+    [checkboxColumnEnable]="false"
+    [loading]="loading"
+    [buttonTemplates]="{ runNow: runNowTemplate }">
+</kendo-remote-grid>
+

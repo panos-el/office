@@ -9,7 +9,7 @@ export const CUSTOMER_ROLE_ROUTES: Routes = [
     },
     {
         path: 'customer-role/:id',
-        loadComponent: () => import('./customer-role-edit.').then((c) => c.CustomerRoleEditComponent),
+        loadComponent: () => import('./customer-role-edit').then((c) => c.CustomerRoleEditComponent),
         canActivate: [CanActivateEditFormGuard],
         canDeactivate: [canDeactivateGuard],
         providers: [KendoEditFormContextService]
