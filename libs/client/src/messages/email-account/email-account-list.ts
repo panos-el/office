@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BASE_URL, ClientDataService, ListFormOptions, LocalizationService } from '@office/core';
-import { KendoRemoteGridComponent, IKendoGridToken, KENDO_GRID_TOKEN } from '@office/kendo-ui';
+import { KendoRemoteGridComponent, KendoGridToken } from '@office/kendo-ui';
 import { KENDO_BUTTON } from '@progress/kendo-angular-buttons';
 import { ToastrService } from 'ngx-toastr';
 
@@ -11,8 +11,8 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'email-account-list',
   templateUrl: './email-account-list.html',
 })
-export class EmailAccountListComponent implements OnInit, AfterViewInit {   
-    @ViewChild(KENDO_GRID_TOKEN) grid!: IKendoGridToken;
+export class EmailAccountListComponent implements OnInit {
+    @ViewChild(KendoGridToken) grid!: KendoGridToken;
     
     options: ListFormOptions = {
       propertiesUrl: 'api/emailAccount/list',
@@ -37,12 +37,6 @@ export class EmailAccountListComponent implements OnInit, AfterViewInit {
         this.markLabel = this.localizationService.translate("common.mark");
     }
 
-  ngAfterViewInit(): void {
-    const grid = this.grid as IKendoGridToken;
-    if (grid !== null) {
-      grid.reloadData();
-    }
-  }
     markAsDefaultEmail(item: any) {
         const url = `${this.baseUrl}api/emailAccount/markAsDefaultEmail`;
 

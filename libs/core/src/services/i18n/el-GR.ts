@@ -49,6 +49,8 @@ export const elCustomMessages = {
         "execute": "Εκτέλεση",//@
         "clearAll": "Εκκαθάριση εγγραφών",
         "mark": "Επισήμανση",
+        "exportToPdf": "Εξαγωγή σε Pdf",
+        "exportToExcel": "Εξαγωγή σε Excel",
     },
     "messages": {
         "deleteFile": "Διαγραφή αρχείου.",

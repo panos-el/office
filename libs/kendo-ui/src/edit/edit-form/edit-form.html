@@ -1,0 +1,37 @@
+<div>
+    @if (fields) {
+
+        <div [@animationState]="animate ? 'active' : 'inactive'">
+
+            <div class="mb-4 text-2xl font-medium">{{pageTitle}}</div>
+            <kendo-toolbar>
+
+                @if(settingsEnable === true) {
+                    <kendo-toolbar-dropdownbutton
+                        [popupSettings]="{ popupAlign: { horizontal: 'right', vertical: 'top' }}"
+                        [data]="settingsData"
+                        [title]="settingsLabel"
+                        iconClass="k-icon k-font-icon k-i-cog">
+                    </kendo-toolbar-dropdownbutton>
+                }
+                <kendo-toolbar-button [title]="backLabel" iconClass="k-icon k-font-icon k-i-arrow-left" (click)="goBack()"></kendo-toolbar-button>
+
+                <kendo-toolbar-spacer></kendo-toolbar-spacer>
+
+                <kendo-toolbar-button [disabled]="!isDirty" [text]="saveLabel" themeColor="primary" (click)="saveChanges()"></kendo-toolbar-button>
+                <kendo-toolbar-button [disabled]="!isDirty" [text]="saveAndExitLabel" (click)="saveChanges(true)"></kendo-toolbar-button>
+                <kendo-toolbar-button [disabled]="!isDirty" [text]="cancelLabel" (click)="cancelChanges()"></kendo-toolbar-button>
+
+            </kendo-toolbar>
+
+            <form kendoForm class="card mt-3"
+                            [formGroup]="form" 
+                            [cols]="effectiveCols()" [gutters]="gutters"
+                            [orientation]="effectiveOrientation()">
+                <formly-form class="k-formly-form" 
+                            [form]="form" [model]="model" [fields]="fields" [options]="options"></formly-form>
+            </form>
+
+        </div>
+    }
+</div>

@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 import { CanActivateEditFormGuard } from '@office/core';
-import { canDeactivateGuard, KendoEditFormContextService } from '@office/kendo-ui';
+import { canDeactivateGuard, CanDeactivateService } from '@office/kendo-ui';
 
 export const EMAIL_ACCOUNT_ROUTES: Routes = [    
     {
@@ -11,7 +11,7 @@ export const EMAIL_ACCOUNT_ROUTES: Routes = [
         path: 'email-account/:id',
         loadComponent: () => import('./email-account-edit').then((c) => c.EmailAccountEditComponent),
         canActivate: [CanActivateEditFormGuard],
-        canDeactivate: [canDeactivateGuard], 
-        providers: [KendoEditFormContextService]
+        canDeactivate: [canDeactivateGuard],
+        providers: [CanDeactivateService]
     },
 ];

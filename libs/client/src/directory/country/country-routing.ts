@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 import { CanActivateEditFormGuard } from '@office/core';
-import { canDeactivateGuard, KendoEditFormContextService } from '@office/kendo-ui';
+import { canDeactivateGuard, CanDeactivateService } from '@office/kendo-ui';
 
 export const COUNTRY_ROUTES: Routes = [    
     {
@@ -12,6 +12,6 @@ export const COUNTRY_ROUTES: Routes = [
         loadComponent: () => import('./country-edit').then((c) => c.CountryEditComponent),
         canActivate: [CanActivateEditFormGuard],
         canDeactivate: [canDeactivateGuard], 
-        providers: [KendoEditFormContextService]
+        providers: [CanDeactivateService]
     },
 ];

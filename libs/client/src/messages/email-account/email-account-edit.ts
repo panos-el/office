@@ -1,17 +1,17 @@
-import { Component, inject, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, inject, ViewChild } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 import { BASE_URL, ClientDataService, EditFormOptions, LocalizationService } from "@office/core";
-import { EDIT_FORM_TOKEN, FormlyFormState, IEditFormToken, KendoEditFormComponent, KendoFormlyFormComponent } from "@office/kendo-ui";
+import { EditFormToken, FormlyContext, KendoEditFormComponent, KendoEditFormlyComponent } from "@office/kendo-ui";
 import { FormlyFieldConfig, FormlyFormOptions } from "@ngx-formly/core";
 import { UntypedFormGroup } from "@angular/forms";
 
 @Component({
-    imports: [KendoEditFormComponent, KendoFormlyFormComponent],
+    imports: [KendoEditFormComponent, KendoEditFormlyComponent],
     selector: "email-account-edit",
     templateUrl: './email-account-edit.html',
 })
-export class EmailAccountEditComponent {
-    @ViewChild('editForm', { read: EDIT_FORM_TOKEN }) editForm!: IEditFormToken;
+export class EmailAccountEditComponent implements AfterViewInit {
+    @ViewChild(EditFormToken) editForm!: EditFormToken;
     editOptions: EditFormOptions = {
         parentUrl: "client/email-account",
         createUrl: "api/emailAccount/create",
@@ -19,8 +19,8 @@ export class EmailAccountEditComponent {
     };
 
     public loading = false;
-    state!: FormlyFormState;
     sendEmailLabel!: string;
+    emailAccount: any;
 
     baseUrl = inject(BASE_URL);
 
@@ -34,6 +34,12 @@ export class EmailAccountEditComponent {
         private localizationService: LocalizationService,
         private toastrService: ToastrService
     ) {}
+
+    ngAfterViewInit(): void {
+        if(this.editForm) {
+            const form = this.editForm;
+        }
+    }
 
     ngOnInit(): void {
         this.sendEmailLabel = this.localizationService.translate("pages.emailAccount.sendTestEmailTo");
@@ -52,9 +58,21 @@ export class EmailAccountEditComponent {
                     showButton: (field: any, model: any) => {
                         return model?.id !== 0;
                     },
-                    onClick: (field: any) => {
-                        if(field?.model?.sendEmail)
-                            this.sendEmail(field.model.sendEmail);
+                    onClick: (field: any) => {  
+                                                                  
+                        return new Promise((resolve, reject) => {
+                            setTimeout(() => {                                
+                                if (field?.model?.sendEmail) { 
+                                    console.log('email send');                
+                                }
+                                resolve({});  
+                            }, 3000);             
+                        });
+
+
+                        // if(field?.model?.sendEmail)
+                        //     return this.sendEmail(field.model.sendEmail);
+                        // return Promise.resolve({});
                     }
                 },
             }]
@@ -68,12 +86,13 @@ export class EmailAccountEditComponent {
     sendEmail(sendTestEmailTo: string) {
         const val = this.editForm;
         console.log(sendTestEmailTo);
+        return Promise.resolve({});
     }
     // sendEmail(sendTestEmailTo: string) {
     //     const url = `${this.baseUrl}api/emailAccount/sendTestEmail`;
 
     //     this.disabled = true;
-    //     this.dataService.fetchJsonBodyPost(url, this.model, { sendTestEmailTo })
+    //     this.dataService.fetchJsonBodyPost(url, this.emailAccount, { sendTestEmailTo })
     //         .then((result: any) => {
     //             this.toastrService.success(result.info);
     //             this.form.get("sendEmail").setValue("");
@@ -86,7 +105,7 @@ export class EmailAccountEditComponent {
     //         });
     // }
 
-    onFormlyFormStateChange(state: FormlyFormState) {
-        this.state = state;
+    formlyContextChange(state: FormlyContext) {
+        this.emailAccount = state.model;
     }
 }

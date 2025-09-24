@@ -8,8 +8,8 @@ import { FieldTypeConfig, FormlyFieldConfig, FormlyModule } from '@ngx-formly/co
 import { FieldType, BaseFormlyFieldProps } from '../../form-field';
 
 interface ButtonTextBoxProps extends BaseFormlyFieldProps {
-    onClick?: (field: any) => void;
-    showButton?: (field: any, model: any) => boolean;
+    onClick?: (field: FieldTypeConfig<ButtonTextBoxProps>) => Promise<void>;
+    showButton?: (field: FieldTypeConfig<ButtonTextBoxProps>, model: any) => boolean;
     svgIcon?: SVGIcon;
 }
 
@@ -26,8 +26,8 @@ export interface FormlyButtonTextBoxFieldConfig extends FormlyFieldConfig<Button
         <ng-template kendoTextBoxSuffixTemplate>
             <button kendoButton
                 [svgIcon]="props.svgIcon || saveIcon"
-                [disabled]="(props.disabled === true) || (props.readonly === true) || (disabled === true)"
-                (click)="props.onClick && props.onClick(field)">
+                [disabled]="(props.disabled === true) || (props.readonly === true)"
+                (click)="onClick(field)">
             </button>
         </ng-template>
         }
@@ -37,7 +37,6 @@ export interface FormlyButtonTextBoxFieldConfig extends FormlyFieldConfig<Button
 })
 export class FormlyFieldButtonTextBox extends FieldType<FieldTypeConfig<ButtonTextBoxProps>> {
     saveIcon: SVGIcon = saveIcon;
-    disabled: boolean = false;
 
     get buttonEnable(): boolean | Promise<boolean> {
         if (this.props.showButton) {
@@ -46,4 +45,12 @@ export class FormlyFieldButtonTextBox extends FieldType<FieldTypeConfig<ButtonTe
         return true;
     }
     
+    onClick(field: FieldTypeConfig<ButtonTextBoxProps>) {
+        if (this.props.onClick) {
+            this.props.disabled = true;
+            this.props.onClick(field).finally(() => {
+                this.props.disabled = false;
+            });
+        }
+    }
 }

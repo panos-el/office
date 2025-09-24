@@ -1,1 +1,0 @@
-export * from './sticky-grid-header.directive';

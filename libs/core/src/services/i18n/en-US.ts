@@ -49,6 +49,8 @@ export const enCustomMessages = {
         "execute": "Execute",
         "clearAll": "Clear records",
         "mark": "Mark",
+        "exportToPdf": "Export to Pdf",
+        "exportToExcel": "Export to Excel"
     },
     "messages": {
         "deleteFile": "Delete file",

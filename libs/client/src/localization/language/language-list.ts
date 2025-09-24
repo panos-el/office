@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, ContentChild, inject, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BASE_URL, ClientDataService, ListFormOptions, LocalizationService } from '@office/core';
-import { IKendoGridToken, KENDO_GRID_TOKEN, KendoRemoteGridComponent } from '@office/kendo-ui';
+import { KendoGridToken, KendoRemoteGridComponent } from '@office/kendo-ui';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
     templateUrl: './language-list.html'
 })
 export class LanguageListComponent implements OnInit {
-    @ViewChild(KENDO_GRID_TOKEN) grid!: IKendoGridToken;
+    @ViewChild(KendoGridToken) grid!: KendoGridToken;
 
     options: ListFormOptions = {
         propertiesUrl: 'api/language/list',

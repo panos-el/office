@@ -10,9 +10,7 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
  * @param fields - Array of FormlyFieldConfig to traverse.
  * @returns An object whose properties are keys (from leaf nodes) mapped to their corresponding FormlyFieldConfig.
  */
-export function getLeafNodesWithKeys(
-    fields: FormlyFieldConfig[]
-): { [key: string]: FormlyFieldConfig } {
+export function getLeafNodesWithKeys(fields: FormlyFieldConfig[]): { [key: string]: FormlyFieldConfig } {
     let result: { [key: string]: FormlyFieldConfig } = {};
 
     for (const field of fields) {

@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 import { CanActivateEditFormGuard } from '@office/core';
-import { canDeactivateGuard, KendoEditFormContextService } from '@office/kendo-ui';
+import { canDeactivateGuard, CanDeactivateService } from '@office/kendo-ui';
 
 export const PERMISSION_RECORD_ROUTES: Routes = [    
     {
@@ -11,7 +11,7 @@ export const PERMISSION_RECORD_ROUTES: Routes = [
         path: 'permission-record/:id',
         loadComponent: () => import('./permission-record-edit').then((c) => c.PermissionRecordEditComponent),
         canActivate: [CanActivateEditFormGuard],
-        canDeactivate: [canDeactivateGuard], 
-        providers: [KendoEditFormContextService]
+        canDeactivate: [canDeactivateGuard],
+        providers: [CanDeactivateService]
     },
 ];

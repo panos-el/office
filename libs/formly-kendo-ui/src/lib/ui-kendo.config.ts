@@ -5,6 +5,7 @@ import { withFormlyFieldDatepicker } from '../datepicker';
 import { withFormlyFormField } from '../form-field';
 import { withFormlyFieldInput } from '../input';
 import { withFormlyFieldLocaleTabs } from '../locale-tabs';
+import { withFormlyFieldMulticolumncombobox } from '../multicolumncombobox';
 import { withFormlyFieldMultiselect } from '../multiselect';
 import { withFormlyFieldNumericTextbox } from '../numeric';
 import { withFormlyFieldRadio } from '../radio';
@@ -23,6 +24,7 @@ export function withFormlyKendo() {
     withFormlyFormField(),
     withFormlyFieldInput(),
     withFormlyFieldLocaleTabs(),
+    withFormlyFieldMulticolumncombobox(),
     withFormlyFieldMultiselect(),
     withFormlyFieldNumericTextbox(),
     withFormlyFieldRadio(),

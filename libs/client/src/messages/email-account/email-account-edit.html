@@ -1,7 +1,9 @@
 
 <kendo-edit-form #editForm
     [formOptions]="editOptions"
-    (FormlyFormStateChange)="onFormlyFormStateChange($event)">
+    (formlyContextChange)="formlyContextChange($event)">
 </kendo-edit-form>
 
-<formly-form-form [form]="form" [model]="model" [fields]="fields" [options]="options"></formly-form-form>
+<kendo-edit-formly 
+    classes="card mt-3" [form]="form" [model]="model" [fields]="fields" [options]="options">
+</kendo-edit-formly>

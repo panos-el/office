@@ -3,7 +3,7 @@ import { Component, ContentChild, inject, OnInit, ViewChild } from '@angular/cor
 import { ReactiveFormsModule } from '@angular/forms';
 import { KENDO_BUTTON } from '@progress/kendo-angular-buttons';
 import { BASE_URL, ClientDataService, ListFormOptions, LocalizationService } from '@office/core';
-import { IKendoGridToken, KENDO_GRID_TOKEN, KendoRemoteGridComponent } from '@office/kendo-ui';
+import { KendoGridToken, KendoRemoteGridComponent } from '@office/kendo-ui';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './currency-list.html',
 })
 export class CurrencyListComponent implements OnInit {
-    @ViewChild(KENDO_GRID_TOKEN) grid!: IKendoGridToken;
+    @ViewChild(KendoGridToken) grid!: KendoGridToken;
     
     options: ListFormOptions = {
       propertiesUrl: 'api/currency/list',

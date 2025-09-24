@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideAppInitializer, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, provideAppInitializer, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withEnabledBlockingInitialNavigation, withInMemoryScrolling, withRouterConfig } from '@angular/router';
@@ -11,7 +11,7 @@ import Aura from '@primeuix/themes/aura';
 import { providePrimeNG } from 'primeng/config';
 import { appRoutes } from './app.routes';
 
-import { AFTER_APP_INITIALIZER, APP_PROVIDERS, appInitializer, authInterceptor, xsrfInterceptor } from '@office/core';
+import { AFTER_APP_INITIALIZER, APP_PROVIDERS, appInitializer, authInterceptor, GlobalErrorHandler, xsrfInterceptor } from '@office/core';
 import { registerLocaleData } from '@angular/common';
 
 import '@progress/kendo-angular-intl/locales/en/all';
@@ -31,7 +31,7 @@ export const appConfig: ApplicationConfig = {
         provideZoneChangeDetection({ eventCoalescing: true }),
         provideRouter(
             appRoutes,
-            withRouterConfig({ onSameUrlNavigation: 'reload' }),
+            // withRouterConfig({ onSameUrlNavigation: 'reload' }),
             withInMemoryScrolling({
                 anchorScrolling: 'enabled',
                 scrollPositionRestoration: 'enabled'
@@ -50,7 +50,8 @@ export const appConfig: ApplicationConfig = {
         provideLoadingBar({ latencyThreshold: 0 }), // after provideHttpClient
         provideAppInitializer(appInitializer), // provideHttpClient
         ...AFTER_APP_INITIALIZER,
-        provideFormlyCore([...withFormlyKendo()])
+        provideFormlyCore([...withFormlyKendo()]),
+        { provide: ErrorHandler, useClass: GlobalErrorHandler }
     ]
 };
 

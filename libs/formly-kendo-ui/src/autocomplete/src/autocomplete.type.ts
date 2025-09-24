@@ -24,7 +24,7 @@ export interface FormlyAutocompleteFieldConfig extends FormlyFieldConfig<Autocom
       [data]="props.options | formlySelectOptions: field"
       [valueField]="'value'"
       [filterable]="true"
-      (filterChange)="handleFilter($event,field)"
+      (filterChange)="handleFilter(field, $event)"
       (valueChange)="props.change && props.change(field, $event)"
     >
     </kendo-autocomplete>
@@ -44,7 +44,7 @@ export class FormlyFieldAutocomplete extends FieldType<FieldTypeConfig<Autocompl
         }
     };
 
-    handleFilter(value: string, field: FieldTypeConfig<AutocompleteProps>) {
+    handleFilter(field: FieldTypeConfig<AutocompleteProps>, value: string) {
 
         field.props.options = field.props.data?.filter(
             (s: any) => s.value.toLowerCase().indexOf(value.toLowerCase()) !== -1

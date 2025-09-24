@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 import { CanActivateEditFormGuard } from '@office/core';
-import { canDeactivateGuard, KendoEditFormContextService } from '@office/kendo-ui';
+import { canDeactivateGuard, CanDeactivateService } from '@office/kendo-ui';
 
 export const PERSIST_STATE_ROUTES: Routes = [    
     {
@@ -9,9 +9,9 @@ export const PERSIST_STATE_ROUTES: Routes = [
     },
     {
         path: 'persist-state/:id',
-        loadComponent: () => import('./persist-state-edit.').then((c) => c.PersistStateEditComponent),
+        loadComponent: () => import('./persist-state-edit').then((c) => c.PersistStateEditComponent),
         canActivate: [CanActivateEditFormGuard],
-        canDeactivate: [canDeactivateGuard], 
-        providers: [KendoEditFormContextService]
+        canDeactivate: [canDeactivateGuard],
+        providers: [CanDeactivateService]
     },
 ];

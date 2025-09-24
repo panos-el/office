@@ -17,6 +17,11 @@ import { MESSAGE_TEMPLATE_ROUTES } from './messages/message-template/message-tem
 import { PERMISSION_RECORD_ROUTES } from './security/permission-record/permission-record-routing';
 import { SCHEDULE_TASK_ROUTES } from './tasks/schedule-task/schedule-task-routing';
 import { STORE_ROUTES } from './stores/store/store-routing';
+import { CUSTOMER_ROUTES } from './customers/customer/customer-routing';
+import { COMPANY_SETTINGS_ROUTES } from './configuration/company-settings/company-settings-routing';
+import { CUSTOMER_SETTINGS_ROUTES } from './configuration/customer/customer-settings-routing';
+import { GDPR_SETTINGS_ROUTES } from './configuration/gdpr/gdpr-settings-routing';
+import { ROBOTS_TXT_ROUTES } from './configuration/robot-txt/robots-txt-settings-routing';
 
 export * from './layout/service/layout.service';
 export * from './layout/components/app.configurator';
@@ -49,7 +54,12 @@ export const CLIENT_ROUTES: Routes = [
                     ...MESSAGE_TEMPLATE_ROUTES,
                     ...PERMISSION_RECORD_ROUTES,
                     ...SCHEDULE_TASK_ROUTES,
-                    ...STORE_ROUTES
+                    ...STORE_ROUTES,
+                    ...CUSTOMER_ROUTES,
+                    ...COMPANY_SETTINGS_ROUTES,
+                    ...CUSTOMER_SETTINGS_ROUTES,
+                    ...GDPR_SETTINGS_ROUTES,
+                    ...ROBOTS_TXT_ROUTES
                     // {
                     //     path: 'not-found',
                     //     loadComponent: () => import('./components/not-found/not-found.component').then((c) => c.NotfoundComponent)
