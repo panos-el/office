@@ -10,6 +10,6 @@ export class GlobalErrorHandler implements ErrorHandler {
         const { title, message } = mapToMessage(error);
         this.notify.error(message, title);
 
-        // console.error('[GlobalErrorHandler]', error);
+        console.error('[GlobalErrorHandler]', error);
     }
 }

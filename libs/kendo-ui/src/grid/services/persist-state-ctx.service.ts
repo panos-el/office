@@ -3,10 +3,10 @@ import { DialogRef, DialogService } from "@progress/kendo-angular-dialog";
 import { PrimeNG } from "primeng/config";
 import { ToastrService } from "ngx-toastr";
 
-import { KendoRemoteGridComponent } from "./kendo-remote-grid";
+import { KendoRemoteGridComponent } from "../remote-grid/kendo-remote-grid";
 import { PersistStateService } from "./persist-state.service";
-import { PersistModelDialogComponent } from "./persist-model-dialog.component";
-import { PersistListDialogComponent } from "./persist-list-dialog.component";
+import { PersistModelDialogComponent } from "../remote-grid/persist-model-dialog.component";
+import { PersistListDialogComponent } from "../remote-grid/persist-list-dialog.component";
 import { PersistStateItem } from "../api/persist-state-item";
 import { ColumnSettings } from "../api/column-settings.interface";
 import { GridSettings } from "../api/grid-settings.interface";
