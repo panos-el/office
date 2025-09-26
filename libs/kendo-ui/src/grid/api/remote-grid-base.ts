@@ -140,7 +140,7 @@ export abstract class KendoRemoteGridBase extends KendoGridToken implements OnIn
     // Hooks (override as needed)
     // =======================
 
-    public trackByItem(index: number/* , item: GridItem */): any {
+    protected trackByItem(index: number/* , item: GridItem */): any {
         return index;
         //return item.data[this.config.dataKey];
     }
@@ -188,7 +188,7 @@ export abstract class KendoRemoteGridBase extends KendoGridToken implements OnIn
     // Public API
     // =======================
 
-    public applyProperties(): void {
+    protected applyProperties(): void {
         const url = this.getPropertiesUrl();
         this.loading = true;
 
@@ -352,11 +352,11 @@ export abstract class KendoRemoteGridBase extends KendoGridToken implements OnIn
     }
 
     // ---- CRUD
-    public insertCommand(): void {
+    protected insertCommand(): void {
         this.router.navigate([this.formOptions.pathUrl, 0]);
     }
 
-    public deleteCommand(): void {
+    protected deleteCommand(): void {
         const options: ConfirmationDialogOptions = {
             message: stringFormat(this.primeng.getTranslation('message.deleteSelection'), this.selectedKeys.length),
             titleColor: '#d51923'

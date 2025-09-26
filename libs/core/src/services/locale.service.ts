@@ -40,4 +40,18 @@ export class LocaleService {
 
         // load(cldrKendo);
     }
+    
+    public setLanguage(langId: any): void {
+        const url = `${this.baseUrl}api/common/setLanguage?langId=${langId}`;
+
+        firstValueFrom(this.httpClient.get(url))
+            .then(_ => {
+                window.location.reload();
+            })
+            .catch(err => {
+                console.error(`Failed to setLanguage(). Make sure ${url} is accessible.`, langId);
+                return Promise.reject(err);
+            });
+    }
+
 }

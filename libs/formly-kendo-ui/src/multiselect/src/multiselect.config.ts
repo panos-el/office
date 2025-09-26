@@ -12,7 +12,6 @@ export function withFormlyFieldMultiselect(): ConfigOption {
             props: {
                 labelProp: 'label',
                 valueProp: 'value',
-                options: []
             },
         },
       },

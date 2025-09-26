@@ -72,6 +72,7 @@ export class LayoutService {
     };
 
     mainMenu = signal<any[]>([]);
+    languages = signal<any[]>([]);
 
     layoutConfig = signal<layoutConfig>(this._config);
 

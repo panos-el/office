@@ -29,14 +29,14 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn):
 
                     if (!newStoredToken || !requestAccessTokenHeader) {
                         console.log('There is no new AccessToken.', { requestAccessTokenHeader, newStoredToken });
-                        router.navigate(['/accessDenied']);
+                        router.navigate(['/client/access-denied']);
                         return throwError(() => error);
                     }
 
                     const newAccessTokenHeader = `Bearer ${newStoredToken}`;
                     if (requestAccessTokenHeader === newAccessTokenHeader) {
                         console.log('No token refresh needed.', { requestAccessTokenHeader, newAccessTokenHeader });
-                        router.navigate(['/accessDenied']);
+                        router.navigate(['/client/access-denied']);
                         return throwError(() => error);
                     }
 

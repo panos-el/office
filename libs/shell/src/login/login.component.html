@@ -1,24 +1,41 @@
 <div *ngIf="model" class="text-primary bg-primary-contrast">
     <div class="flex justify-center">
         <div class="w-full lg:w-5/12 h-screen text-center flex justify-center items-start">
-            <form (submit)="submit()" novalidate class="z-50 w-full lg:w-8/12 px-12 text-center mt-20"
-                style="max-width: 400px">
+            <form (submit)="submit()" novalidate  class="z-50 w-full lg:w-8/12 px-12 text-center mt-20" style="max-width: 400px">
+                <!-- <div class="w-full flex items-center justify-center">
+                    <img src="/layout/images/pages/login/icon-login.svg" alt="avalon-layout" class="w-24" />
+                </div> -->
                 <div class="text-4xl font-light my-6 text-primary-500">Sign in to Avalon</div>
                 <p>Welcome, please use the form to sign-in Avalon network</p>
                 <div class="mt-8 text-left">
                     <label for="username" class="block mb-2 text-surface-600 dark:text-surface-400">Username</label>
                     <p-iconfield class="block">
-                        <input id="username" type="text" pInputText class="w-full" [(ngModel)]="model.username"
-                            name="username" />
+                        <input id="username" type="text" pInputText class="w-full" [(ngModel)]="model.username" name="username" />
                         <p-inputicon class="pi pi-user" />
                     </p-iconfield>
-
-                    <label for="password"
+                    
+                    <label for="username"
                         class="block mb-2 mt-4 text-surface-600 dark:text-surface-400">Password</label>
                     <p-iconfield class="block">
                         <input type="password" pInputText class="w-full" [(ngModel)]="model.password" name="password" />
                         <p-inputicon class="pi pi-lock" />
                     </p-iconfield>
+
+                    <div *ngIf="model.captchaEnabled" class="mt-5">
+                        <p-iconfield class="block">
+                            <input type="text" pInputText class="w-full" [(ngModel)]="model.captchaCode" name="captcha" placeholder="Captcha" />
+                            <p-inputicon class="pi pi-key" />
+                        </p-iconfield>
+                    </div>
+
+                    <div *ngIf="model.captchaEnabled" class="mt-5">
+                        <p-iconfield class="block">
+                            <div class="w-full p-component p-inputtext p-filled" style="padding-top: 3px; padding-bottom: 3px;">
+                                <img [src]="model.captchaImage" alt="imageSrc" style="height: 28px;" />
+                            </div>
+                            <p-inputicon class="pi pi-refresh cursor-pointer text-color hover:text-primary" (click)="reCaptcha()" />
+                        </p-iconfield>
+                    </div>
 
                     <div class="flex items-center justify-between mt-8">
                         <div class="flex items-center">
@@ -28,7 +45,7 @@
                     </div>
 
                     <div class="flex items-center justify-between mt-6 gap-4">
-                        <button [routerLink]="['/']" pButton type="submit" label="Login" class="w-40"></button>
+                        <button pButton type="submit" label="Login" class="w-40"></button>
                         <a href="#" class="secondary-button">Forgot Password?</a>
                     </div>
                 </div>

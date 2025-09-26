@@ -4,6 +4,8 @@
     (formlyContextChange)="formlyContextChange($event)">
 </kendo-edit-form>
 
-<kendo-edit-formly 
-    classes="card mt-3" [form]="form" [model]="model" [fields]="fields" [options]="options">
-</kendo-edit-formly>
+@if (model) {
+    <kendo-edit-formly
+        classes="card mt-3" [form]="form" [model]="model" [fields]="fields" [options]="options">
+    </kendo-edit-formly>
+}

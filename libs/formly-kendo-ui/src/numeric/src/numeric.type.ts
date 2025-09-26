@@ -9,6 +9,7 @@ interface NumericTextboxProps extends BaseFormlyFieldProps {
     decimals?: number;
     format?: string;
     spinners?: boolean;
+    nullable?: boolean;
 }
 
 export interface FormlyNumericFieldConfig extends FormlyFieldConfig<NumericTextboxProps> {
@@ -23,9 +24,9 @@ export interface FormlyNumericFieldConfig extends FormlyFieldConfig<NumericTextb
             [formlyAttributes]="field"
             [formControl]="formControl"
             [readonly]="props.readonly === true"
-            [decimals]="props.decimals || 0"
-            [format]="props.format || 'n0'"
-            [spinners]="props.spinners || true"
+            [decimals]="props.decimals ?? 0"
+            [format]="props.format ?? 'n0'"
+            [spinners]="props.spinners ?? true"
             (valueChange)="onValueChange(field, $event)"
         >
         </kendo-numerictextbox>
@@ -34,7 +35,7 @@ export interface FormlyNumericFieldConfig extends FormlyFieldConfig<NumericTextb
 })
 export class FormlyFieldNumericTextbox extends FieldType<FieldTypeConfig<NumericTextboxProps>> {
     onValueChange(field: FieldTypeConfig<NumericTextboxProps>, value: any) {
-        if (value === null || value === undefined) 
+        if (field.props.nullable !== true && (value === null || value === undefined)) 
             field.formControl.setValue(0);
 
         if(field.props.change)

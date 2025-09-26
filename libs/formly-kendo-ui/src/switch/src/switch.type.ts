@@ -25,10 +25,10 @@ export interface FormlySwitchFieldConfig extends FormlyFieldConfig<SwitchProps> 
         [formControl]="formControl"
         [formlyAttributes]="field"
         [readonly]="props.readonly === true"
-        [style]="props.style || style"
-        [size]="props.size || 'small'"
-        [onLabel]="props.labelOn || labelOn"
-        [offLabel]="props.labelOff || labelOff">
+        [style]="props.style ?? style"
+        [size]="props.size ?? 'small'"
+        [onLabel]="props.labelOn ?? labelOn"
+        [offLabel]="props.labelOff ?? labelOff">
       </kendo-switch>
   `,
     changeDetection: ChangeDetectionStrategy.OnPush

@@ -1,17 +1,17 @@
-import { AfterViewInit, Component, inject, ViewChild } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 import { BASE_URL, ClientDataService, EditFormOptions, LocalizationService } from "@office/core";
-import { EditFormToken, FormlyContext, KendoEditFormComponent, KendoEditFormlyComponent } from "@office/kendo-ui";
+import { FormlyContext, KendoEditFormComponent, KendoEditFormlyComponent } from "@office/kendo-ui";
 import { FormlyFieldConfig, FormlyFormOptions } from "@ngx-formly/core";
 import { UntypedFormGroup } from "@angular/forms";
+import { CommonModule } from "@angular/common";
 
 @Component({
-    imports: [KendoEditFormComponent, KendoEditFormlyComponent],
+    imports: [CommonModule, KendoEditFormComponent, KendoEditFormlyComponent],
     selector: "email-account-edit",
     templateUrl: './email-account-edit.html',
 })
-export class EmailAccountEditComponent implements AfterViewInit {
-    @ViewChild(EditFormToken) editForm!: EditFormToken;
+export class EmailAccountEditComponent {
     editOptions: EditFormOptions = {
         parentUrl: "client/email-account",
         createUrl: "api/emailAccount/create",
@@ -32,14 +32,8 @@ export class EmailAccountEditComponent implements AfterViewInit {
     constructor(
         private dataService: ClientDataService,
         private localizationService: LocalizationService,
-        private toastrService: ToastrService
+        private toastr: ToastrService
     ) {}
-
-    ngAfterViewInit(): void {
-        if(this.editForm) {
-            const form = this.editForm;
-        }
-    }
 
     ngOnInit(): void {
         this.sendEmailLabel = this.localizationService.translate("pages.emailAccount.sendTestEmailTo");
@@ -56,55 +50,41 @@ export class EmailAccountEditComponent implements AfterViewInit {
                     label: 'Email',
                     placeholder: 'email to send',
                     showButton: (field: any, model: any) => {
-                        return model?.id !== 0;
+                        return this.emailAccount?.id !== 0;
                     },
-                    onClick: (field: any) => {  
+                    onButtonClick: (field: any) => {  
                                                                   
-                        return new Promise((resolve, reject) => {
-                            setTimeout(() => {                                
-                                if (field?.model?.sendEmail) { 
-                                    console.log('email send');                
-                                }
+                        return new Promise((resolve, reject) => {          
+                            const sendTestEmailTo = field?.model?.sendEmail; 
+
+                            if (sendTestEmailTo) { 
+                                
+                                const url = `${this.baseUrl}api/emailAccount/sendTestEmail`;
+
+                                this.dataService.fetchJsonBodyPost(url, this.emailAccount, { sendTestEmailTo })
+                                    .then((result: any) => {
+                                        field.form.get("sendEmail").setValue("");
+                                        this.toastr.success(result.info);
+                                        resolve({});
+                                    })
+                                    .catch((error: Error) => {
+                                        reject(error);
+                                    });           
+                            } else {
+                                this.toastr.info("Enter a legal email");
                                 resolve({});  
-                            }, 3000);             
+                            }
                         });
-
-
-                        // if(field?.model?.sendEmail)
-                        //     return this.sendEmail(field.model.sendEmail);
-                        // return Promise.resolve({});
                     }
                 },
             }]
         }];
 
         this.model = {
-            sendEmail: ''
+            sendEmail: null
         };
     }
     
-    sendEmail(sendTestEmailTo: string) {
-        const val = this.editForm;
-        console.log(sendTestEmailTo);
-        return Promise.resolve({});
-    }
-    // sendEmail(sendTestEmailTo: string) {
-    //     const url = `${this.baseUrl}api/emailAccount/sendTestEmail`;
-
-    //     this.disabled = true;
-    //     this.dataService.fetchJsonBodyPost(url, this.emailAccount, { sendTestEmailTo })
-    //         .then((result: any) => {
-    //             this.toastrService.success(result.info);
-    //             this.form.get("sendEmail").setValue("");
-    //         })
-    //         .catch((error: Error) => {
-    //             Promise.reject(error);
-    //         })
-    //         .finally(() => {
-    //             this.disabled = false;
-    //         });
-    // }
-
     formlyContextChange(state: FormlyContext) {
         this.emailAccount = state.model;
     }

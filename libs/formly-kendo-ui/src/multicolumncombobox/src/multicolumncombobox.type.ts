@@ -33,13 +33,13 @@ export interface FormlyMulticolumncomboboxFieldConfig extends FormlyFieldConfig<
             [textField]="textField"
             [valueField]="valueField"
             [clearButton]="true"
-            [valuePrimitive]="props.primitive || true"
-            [showStickyHeader]="props.showStickyHeader || false "
+            [valuePrimitive]="props.primitive ?? true"
+            [showStickyHeader]="props.showStickyHeader ?? false "
             (filterChange)="handleFilterChange(field, $event)"
             (selectionChange)="props.change && props.change(field, $event)"
         >
             <kendo-combobox-column *ngFor="let c of props.columns" 
-                [field]="c.field" [title]="c.title || c.field" [width]="c.width" [headerStyle]="props.headerStyle || {}">
+                [field]="c.field" [title]="c.title ?? c.field" [width]="c.width" [headerStyle]="props.headerStyle ?? {}">
             </kendo-combobox-column>
         </kendo-multicolumncombobox>
     `,

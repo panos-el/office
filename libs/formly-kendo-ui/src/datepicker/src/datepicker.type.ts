@@ -25,9 +25,9 @@ export interface FormlyDatepickerFieldConfig extends FormlyFieldConfig<Datepicke
         [formControl]="formControl" 
         [formlyAttributes]="field"
         [readonly]="props.readonly === true"
-        [format]="props.format || format"
-        [navigation]="props.navigation || false"
-        [bottomView]="props.bottomView || 'month'"
+        [format]="props.format ?? format"
+        [navigation]="props.navigation ?? false"
+        [bottomView]="props.bottomView ?? 'month'"
         (valueChange)="props.change && props.change(field, $event)">
     </kendo-datepicker>
   `,
@@ -38,13 +38,4 @@ export class FormlyFieldDatepicker extends FieldType<FieldTypeConfig<DatepickerP
               displayFormat: { year: 'numeric', month: '2-digit', day: "2-digit" },
               inputFormat: { year: 'numeric', month: '2-digit', day: "2-digit" },
             };
-
-    override defaultOptions = {
-        hooks: {
-            onInit: (field: FormlyFieldConfig) => {
-                const options = field.props;
-            },
-        }
-    };
-
 }

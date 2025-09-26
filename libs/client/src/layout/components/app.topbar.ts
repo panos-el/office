@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, computed, ElementRef, inject, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { StyleClassModule } from 'primeng/styleclass';
@@ -41,77 +41,16 @@ import { RippleModule } from 'primeng/ripple';
         <div class="layout-topbar-end">
             <div class="layout-topbar-actions-end">
                 <ul class="layout-topbar-items">
-                    <li class="layout-topbar-search">
-                        <input type="text" placeholder="Search" />
-                        <i class="pi-fw pi pi-search"></i>
-                    </li>
                     <li>
                         <a pStyleClass="@next" enterFromClass="hidden" enterActiveClass="animate-scalein" leaveToClass="hidden" leaveActiveClass="animate-fadeout" [hideOnOutsideClick]="true">
-                            <i class="pi pi-bell"></i>
+                            <i class="pi pi-language"></i>
                         </a>
                         <div class="hidden">
                             <ul class="list-none p-0 m-0">
-                                <li>
+                                <li *ngFor="let lang of languages(); let i = index;">
                                     <a class="py-2 px-3 flex gap-2 cursor-pointer text-color hover:text-primary">
-                                        <i class="pi pi-fw pi-sliders-h text-lg"></i>
-                                        <span>Pending tasks</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="py-2 px-3 flex gap-2 cursor-pointer text-color hover:text-primary ">
-                                        <i class="pi pi-fw pi-calendar text-lg"></i>
-                                        <span>Meeting today at 3pm</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="py-2 px-3 flex gap-2 cursor-pointer text-color hover:text-primary">
-                                        <i class="pi pi-fw pi-download text-lg"></i>
-                                        <span>Download documents</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="py-2 px-3 flex gap-2 cursor-pointer text-color hover:text-primary">
-                                        <i class="pi pi-fw pi-bookmark text-lg"></i>
-                                        <span>Book flight</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a pStyleClass="@next" enterFromClass="hidden" enterActiveClass="animate-scalein" leaveToClass="hidden" leaveActiveClass="animate-fadeout" [hideOnOutsideClick]="true">
-                            <i class="pi pi-envelope"></i>
-                        </a>
-                        <div class="hidden">
-                            <ul class="list-none p-0 m-0 flex flex-col text-color">
-                                <li>
-                                    <a class="cursor-pointer flex items-center px-4 py-2 gap-4 hover:text-primary">
-                                        <img src="/layout/images/avatar/avatar5.png" class="w-12 h-12" />
-                                        <span>Give me a call</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="cursor-pointer flex items-center px-4 py-2 gap-4 hover:text-primary">
-                                        <img src="/layout/images/avatar/avatar1.png" class="w-12 h-12" />
-                                        <span>Sales reports attached</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="cursor-pointer flex items-center px-4 py-2 gap-4 hover:text-primary">
-                                        <img src="/layout/images/avatar/avatar2.png" class="w-12 h-12" />
-                                        <span>About your invoice</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="cursor-pointer flex items-center px-4 py-2 gap-4 hover:text-primary">
-                                        <img src="/layout/images/avatar/avatar3.png" class="w-12 h-12" />
-                                        <span>Meeting today at 10pm</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="cursor-pointer flex items-center px-4 py-2 gap-4 hover:text-primary">
-                                        <img src="/layout/images/avatar/avatar4.png" class="w-12 h-12" />
-                                        <span>Out of office</span>
+                                        <img [src]="lang.flag" alt="flag" />
+                                        <span>{{lang.name}}</span>
                                     </a>
                                 </li>
                             </ul>
@@ -119,9 +58,25 @@ import { RippleModule } from 'primeng/ripple';
                     </li>
 
                     <li>
-                        <button class="app-config-button" (click)="onConfigSidebarToggle()">
-                            <i class="pi pi-palette"></i>
-                        </button>
+                        <a pStyleClass="@next" enterFromClass="hidden" enterActiveClass="animate-scalein" leaveToClass="hidden" leaveActiveClass="animate-fadeout" [hideOnOutsideClick]="true">
+                            <i class="pi pi-user"></i>
+                        </a>
+                        <div class="hidden">
+                            <ul class="list-none p-0 m-0 flex flex-col text-color">
+                                <li>
+                                    <a class="cursor-pointer flex items-center px-4 py-2 gap-4 hover:text-primary" (click)="onConfigSidebarToggle()">
+                                        <i class="pi pi-palette"></i>
+                                        <span>Theme switcher</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a [routerLink]="['/login']" class="cursor-pointer flex items-center px-4 py-2 gap-4 hover:text-primary">
+                                        <i class="pi pi-sign-out"></i>
+                                        <span>Logout</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -138,6 +93,8 @@ export class AppTopbar {
     activeItem!: number;
 
     layoutService: LayoutService = inject(LayoutService);
+
+    languages = computed(() => this.layoutService.languages());
 
     get mobileTopbarActive(): boolean {
         return this.layoutService.layoutState().topbarMenuActive;

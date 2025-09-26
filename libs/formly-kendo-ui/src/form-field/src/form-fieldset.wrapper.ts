@@ -17,10 +17,10 @@ interface FieldsetProps extends FormlyFieldProps {
     selector: 'formly-wrapper-kendo-fieldset',
     template: `
         <fieldset kendoFormFieldSet 
-                  [legend]="props.legend || ''" 
-                  [cols]="props.cols || 2" 
-                  [colSpan]="props.colSpan || formFieldColSpans" 
-                  [gutters]="props.gutters || gutters" 
+                  [legend]="props.legend ?? emptyString" 
+                  [cols]="props.cols ?? 2" 
+                  [colSpan]="props.colSpan ?? formFieldColSpans" 
+                  [gutters]="props.gutters ?? gutters" 
                   [ngClass]="props.fsClass">
 
             <ng-container #fieldComponent></ng-container>
@@ -29,6 +29,7 @@ interface FieldsetProps extends FormlyFieldProps {
     `
 })
 export class FormlyWrapperFieldset extends FieldWrapper<FormlyFieldConfig<FieldsetProps>> {
+    public emptyString: string = "";
     public formFieldColSpans: ResponsiveFormBreakPoint[] = [
         { minWidth: 768, value: 1 },
         { maxWidth: 767, value: 2 },
