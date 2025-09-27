@@ -4,14 +4,7 @@
         <div style="background:linear-gradient(0deg, var(--p-primary-600) , var(--p-primary-400)); opacity: .6;top: 0;left: 0;" class="w-full h-full absolute z-0"></div>
         
         <div class="absolute" style="top: 0; right: 0;">
-            <p-selectButton [options]="languages"
-                            [(ngModel)]="languageId"
-                            optionValue="id"
-                            (onChange)="changeLanguage($event)">
-                <ng-template let-item pTemplate>
-                    <img [src]="item.flag" alt="image" />
-                </ng-template>
-            </p-selectButton>
+            <select-language></select-language>
         </div>
 
         <div class="my-0 mx-auto w-full z-20 relative" style="max-width: 1200px ">
@@ -377,4 +370,3 @@
         </div>
     </div>
 </div>
-<app-configurator simple />

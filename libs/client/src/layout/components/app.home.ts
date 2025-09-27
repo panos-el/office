@@ -4,7 +4,8 @@ import { Component } from '@angular/core';
     selector: 'app-home',
     imports: [],
     template: `
-        <div>Home</div>
+        <ng-content></ng-content>
     `
 })
-export class AppHome {}
+export class AppHome {
+}

@@ -1,7 +1,7 @@
 import { ApplicationConfig, ErrorHandler, provideAppInitializer, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideRouter, withEnabledBlockingInitialNavigation, withInMemoryScrolling, withRouterConfig } from '@angular/router';
+import { provideRouter, withEnabledBlockingInitialNavigation, withInMemoryScrolling } from '@angular/router';
 
 import { provideLoadingBar } from '@ngx-loading-bar/core';
 import { provideFormlyCore } from '@ngx-formly/core';
@@ -30,7 +30,8 @@ export const appConfig: ApplicationConfig = {
         // importProvidersFrom([KendoIntlModule]),
         provideZoneChangeDetection({ eventCoalescing: true }),
         provideRouter(
-            appRoutes,
+            appRoutes, 
+            // withDebugTracing(),
             // withRouterConfig({ onSameUrlNavigation: 'reload' }),
             withInMemoryScrolling({
                 anchorScrolling: 'enabled',

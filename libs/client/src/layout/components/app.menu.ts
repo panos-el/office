@@ -2,7 +2,7 @@ import { Component, computed, ElementRef, inject, ViewChild } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AppMenuitem } from './app.menuitem';
-import { LayoutService } from '../service/layout.service';
+import { LayoutService } from '@office/core';
 
 @Component({
     selector: '[app-menu]',

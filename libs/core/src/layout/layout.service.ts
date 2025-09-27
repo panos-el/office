@@ -46,12 +46,12 @@ export class LayoutService {
     _config: layoutConfig = {
         ripple: false,
         preset: 'Aura',
-        primary: 'violet',
+        primary: 'indigo',
         inputStyle: 'outlined',
         surface: null,
         darkTheme: false,
         menuMode: 'static',
-        menuTheme: 'light',
+        menuTheme: 'dark',
         topbarTheme: 'purple',
         menuProfilePosition: 'start'
     };
@@ -72,7 +72,6 @@ export class LayoutService {
     };
 
     mainMenu = signal<any[]>([]);
-    languages = signal<any[]>([]);
 
     layoutConfig = signal<layoutConfig>(this._config);
 

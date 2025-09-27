@@ -4,17 +4,15 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter, firstValueFrom, Subscription } from 'rxjs';
 import { AppTopbar } from './app.topbar';
 import { AppSidebar } from './app.sidebar';
-import { LayoutService } from '../../layout/service/layout.service';
-import { AppConfigurator } from './app.configurator';
-import { AppBreadcrumb } from './app.breadcrumb';
+// import { AppBreadcrumb } from './app.breadcrumb';
 import { AppFooter } from './app.footer';
-import { BASE_URL } from '@office/core';
+import { AppConfigurator, BASE_URL, LayoutService } from '@office/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-layout',
     standalone: true,
-    imports: [CommonModule, AppTopbar, AppSidebar, RouterModule, AppConfigurator/* , AppBreadcrumb */, AppFooter],
+    imports: [CommonModule, AppTopbar, AppSidebar, RouterModule/*, AppConfigurator , AppBreadcrumb */, AppFooter],
     template: `<div class="layout-container" [ngClass]="containerClass()">
         <div app-topbar></div>
         <div app-sidebar></div>
@@ -26,7 +24,7 @@ import { HttpClient } from '@angular/common/http';
             </div>
             <div app-footer></div>
         </div>
-        <app-configurator></app-configurator>
+        <!-- <app-configurator></app-configurator> -->
         <div class="layout-mask animate-fadein"></div>
     </div> `
 })

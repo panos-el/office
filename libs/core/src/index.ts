@@ -32,10 +32,14 @@ export * from './jwt/refresh-token.service';
 export * from './jwt/token-store.service';
 export * from './jwt/utils.service';
 
+export * from './layout/app.configurator';
+export * from './layout/layout.service';
+
 export * from './services/client-data.service';
 export * from './services/custom-messages.service';
 export * from './services/locale.service';
 export * from './services/localization.service';
+export * from './services/navigation.service';
 
 export * from './shared/animations';
 export * from './shared/formly-utils';

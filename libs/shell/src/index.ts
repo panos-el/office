@@ -17,14 +17,13 @@ export const SHELL_ROUTES: Routes = [
         component: LoginComponent
       },
       { 
-        path: 'not-found', 
-        loadComponent: () => import('./not-found/not-found').then((c) => c.Notfound) 
-      },
-      { 
         path: '', 
         redirectTo: 'landing', pathMatch: 'full' 
       },
-      { path: '**', redirectTo: '/not-found' }
+      {
+          path: 'access-denied',
+          loadComponent: () => import('./access-denied/access-denied').then((c) => c.AccessDeniedComponent)
+      }
     ]
   }
 ];

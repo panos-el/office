@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
-    selector: 'not-found',
+    selector: 'app-not-found',
     templateUrl: './not-found.html',
     standalone: true,
     imports: [RouterModule, ButtonModule],

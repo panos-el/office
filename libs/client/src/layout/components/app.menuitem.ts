@@ -3,11 +3,11 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { animate, state, style, transition, trigger, AnimationEvent } from '@angular/animations';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { LayoutService } from '../../layout/service/layout.service';
 import { DomHandler } from 'primeng/dom';
 import { TooltipModule } from 'primeng/tooltip';
 import { CommonModule } from '@angular/common';
 import { RippleModule } from 'primeng/ripple';
+import { LayoutService } from '@office/core';
 
 @Component({
     selector: '[app-menuitem]',

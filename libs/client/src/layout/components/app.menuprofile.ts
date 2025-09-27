@@ -1,11 +1,11 @@
 import { Component, computed, effect, ElementRef, inject, OnDestroy, Renderer2 } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { LayoutService } from '../../layout/service/layout.service';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { LayoutService } from '@office/core';
 
 @Component({
     selector: '[app-menu-profile]',

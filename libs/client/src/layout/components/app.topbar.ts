@@ -2,17 +2,19 @@ import { Component, computed, ElementRef, inject, ViewChild } from '@angular/cor
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { StyleClassModule } from 'primeng/styleclass';
-import { LayoutService } from '../../layout/service/layout.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { RippleModule } from 'primeng/ripple';
+import { LayoutService } from '@office/core';
+import { AppSelectLanguage } from './app.select-language';
 
 @Component({
     selector: '[app-topbar]',
     standalone: true,
-    imports: [RouterModule, CommonModule, StyleClassModule, InputTextModule, ButtonModule, IconFieldModule, InputIconModule, RippleModule],
+    imports: [RouterModule, CommonModule, StyleClassModule, InputTextModule, ButtonModule, IconFieldModule,
+        InputIconModule, RippleModule, AppSelectLanguage],
     template: `<div
         class="layout-topbar"
         [ngClass]="{
@@ -46,14 +48,7 @@ import { RippleModule } from 'primeng/ripple';
                             <i class="pi pi-language"></i>
                         </a>
                         <div class="hidden">
-                            <ul class="list-none p-0 m-0">
-                                <li *ngFor="let lang of languages(); let i = index;">
-                                    <a class="py-2 px-3 flex gap-2 cursor-pointer text-color hover:text-primary">
-                                        <img [src]="lang.flag" alt="flag" />
-                                        <span>{{lang.name}}</span>
-                                    </a>
-                                </li>
-                            </ul>
+                            <app-select-language></app-select-language>
                         </div>
                     </li>
 
@@ -93,8 +88,6 @@ export class AppTopbar {
     activeItem!: number;
 
     layoutService: LayoutService = inject(LayoutService);
-
-    languages = computed(() => this.layoutService.languages());
 
     get mobileTopbarActive(): boolean {
         return this.layoutService.layoutState().topbarMenuActive;

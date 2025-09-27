@@ -74,7 +74,7 @@ export class AuthGuard {
   }
 
   private showAccessDenied(returnUrl: string) {
-    this.router.navigate(["/client/access-denied"], { queryParams: { returnUrl: returnUrl } });
+    this.router.navigate(["/access-denied"], { queryParams: { returnUrl: returnUrl } });
   }
 }
 

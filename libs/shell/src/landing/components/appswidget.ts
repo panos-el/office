@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { Subscription } from 'rxjs';
-import { LayoutService } from '@office/client';
+import { LayoutService } from '@office/core';
 
 @Component({
     selector: 'apps-widget',

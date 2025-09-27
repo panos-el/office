@@ -20,9 +20,6 @@ import { STORE_ROUTES } from './stores/store/store-routing';
 import { CUSTOMER_ROUTES } from './customers/customer/customer-routing';
 import { SETTINGS_ROUTES } from './configuration/public_api';
 
-export * from './layout/service/layout.service';
-export * from './layout/components/app.configurator';
-
 export const CLIENT_ROUTES: Routes = [
     {
         path: '',
@@ -54,10 +51,6 @@ export const CLIENT_ROUTES: Routes = [
                     ...STORE_ROUTES,
                     ...CUSTOMER_ROUTES,
                     ...SETTINGS_ROUTES,
-                    {
-                        path: 'access-denied',
-                        loadComponent: () => import('./common/access-denied/access-denied').then((c) => c.AccessDeniedComponent)
-                    }
                 ]
             }
         ]
